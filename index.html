@@ -970,6 +970,8 @@
       output.hidden = false;
       document.getElementById('saved-message').textContent = 'Preview ready below. It is not saved; copy or print it to keep.';
       output.focus();
+      output.setSelectionRange(0, 0);
+      output.scrollTop = 0;
     }
     async function copyPlan() {
       const text = collectPlan();
