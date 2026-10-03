@@ -1,0 +1,1007 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f5">
+  <title>WeGo — Plan next steps</title>
+  <style>
+    :root {
+      --canvas: #f7f8f5;
+      --surface: #fff;
+      --ink: #172342;
+      --muted: #69748b;
+      --line: #e4e8ee;
+      --teal: #20b7ae;
+      --blue: #2874d8;
+      --soft-teal: #e7f7f5;
+      --soft-blue: #eff5fc;
+      --shadow: 0 8px 28px rgba(23, 35, 66, .055);
+      --radius: 18px;
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--canvas); color: var(--ink); font: 15px/1.5 var(--sans); }
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+    .topbar { height: 72px; display: flex; align-items: center; gap: 42px; padding: 0 max(28px, calc((100vw - 1480px) / 2)); background: rgba(255,255,255,.94); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-size: 27px; font-weight: 750; letter-spacing: -.06em; color: var(--ink); text-decoration: none; }
+    .brand-mark { width: 28px; height: 28px; display: inline-block; position: relative; }
+    .brand-mark i { position: absolute; width: 12px; height: 18px; border-radius: 12px 2px 12px 2px; transform: rotate(-32deg); background: #67b598; left: 2px; top: 7px; }
+    .brand-mark i:nth-child(2) { left: 14px; top: 0; width: 11px; height: 20px; background: #299bd1; transform: rotate(25deg); }
+    .brand-mark i:nth-child(3) { left: 10px; top: 15px; width: 10px; height: 12px; background: #5a72bd; transform: rotate(19deg); }
+    .nav { height: 100%; display: flex; align-items: center; gap: 34px; flex: 1; }
+    .nav button, .help { background: none; border: 0; color: #46516a; height: 100%; padding: 0 5px; }
+    .nav button.active { color: var(--ink); font-weight: 650; border-bottom: 3px solid var(--teal); }
+    .help { display: inline-flex; align-items: center; gap: 10px; color: var(--blue); }
+    .help-dot { display: inline-grid; place-items: center; border: 1.5px solid currentColor; width: 22px; height: 22px; border-radius: 50%; font-size: 13px; font-weight: 700; }
+    main { max-width: 1480px; padding: 30px 28px 56px; margin: auto; }
+    .hero { position: relative; overflow: hidden; padding: 6px 16px 24px; }
+    .hero:after { content: ""; position: absolute; z-index: -1; right: 25px; top: -26px; width: 320px; height: 175px; opacity: .55; background: radial-gradient(ellipse at 70% 70%, #d8efe5 0 17%, transparent 18%), radial-gradient(ellipse at 82% 30%, #d8efe5 0 14%, transparent 15%), radial-gradient(ellipse at 40% 85%, #e4edf6 0 27%, transparent 28%); }
+    .eyebrow { font-size: 12px; letter-spacing: .13em; font-weight: 750; color: #64718a; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin: 8px 0 2px; font: 500 clamp(38px, 4.8vw, 60px)/1.08 var(--serif); letter-spacing: -.035em; }
+    .hero p { margin: 8px 0 0; max-width: 760px; color: var(--muted); font-size: 19px; }
+    .columns { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(390px, 1fr); gap: 16px; }
+    .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .prompt-panel, .example-panel { padding: 22px 24px; }
+    .section-kicker { display: flex; align-items: center; gap: 12px; margin-bottom: 9px; color: #66728a; font-size: 12px; letter-spacing: .09em; font-weight: 760; text-transform: uppercase; }
+    .kicker-icon { display: grid; place-items: center; width: 38px; height: 38px; background: var(--soft-teal); color: #078e9e; border-radius: 50%; font-size: 18px; letter-spacing: 0; }
+    h2 { margin-bottom: 2px; font: 600 26px/1.22 var(--serif); letter-spacing: -.02em; }
+    .helper { color: var(--muted); margin: 0 0 14px; }
+    label { display: block; color: #606d85; font-size: 13px; font-weight: 650; margin-bottom: 7px; }
+    textarea, input, select { color: var(--ink); background: #fff; border: 1px solid #dce2ea; border-radius: 12px; padding: 13px 15px; width: 100%; outline: none; }
+    textarea:focus, input:focus, select:focus { border-color: #43aaa8; box-shadow: 0 0 0 3px rgba(32,183,174,.13); }
+    textarea { min-height: 100px; resize: vertical; font-size: 16px; }
+    .privacy { color: var(--muted); font-size: 12px; display: flex; align-items: center; gap: 8px; margin: 7px 0 16px; }
+    .topic-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: -5px 0 15px; }
+    .topic-chips span { border: 1px solid #dce8e7; border-radius: 999px; padding: 4px 9px; background: #f5fbfa; color: #426773; font-size: 11px; }
+    .quick-label { color: #68738a; text-transform: uppercase; letter-spacing: .08em; font-size: 11px; font-weight: 750; margin: 0 0 8px; }
+    .quick-starts { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 9px; }
+    .quick { min-height: 48px; padding: 8px 11px; border: 1px solid var(--line); border-radius: 12px; background: #fff; color: var(--ink); text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 7px; }
+    .quick:hover, .quick:focus-visible { border-color: #8fcfcb; background: #f8fdfc; }
+    .quick span { color: var(--blue); font-size: 19px; }
+    details.context { border-top: 1px solid var(--line); margin-top: 17px; padding-top: 12px; }
+    details.context summary { list-style: none; display: flex; justify-content: space-between; align-items: center; cursor: pointer; color: #67738a; text-transform: uppercase; letter-spacing: .06em; font-size: 11px; font-weight: 750; }
+    details.context summary::-webkit-details-marker { display: none; }
+    .context-preview { margin-top: 10px; background: #f3f5f8; border-radius: 11px; padding: 10px 13px; display: flex; align-items: center; justify-content: space-between; color: var(--ink); font-size: 13px; }
+    .context-fields { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; padding-top: 13px; }
+    .context-fields label { font-size: 12px; }
+    .context-fields select { padding: 10px; }
+    .primary { width: 100%; margin-top: 15px; min-height: 52px; border: 0; border-radius: 12px; color: #fff; font-weight: 700; background: linear-gradient(105deg, #24b8ab, #2874d8); box-shadow: 0 7px 16px rgba(41,116,194,.16); }
+    .primary:hover { filter: saturate(1.08) brightness(.99); transform: translateY(-1px); }
+    .primary:disabled, .outline:disabled { cursor: wait; opacity: .72; transform: none; }
+    .example-panel { display: flex; flex-direction: column; }
+    .example-panel h2 { font-size: 31px; margin: 2px 0 3px; }
+    .context-line { color: var(--muted); margin-bottom: 13px; }
+    .example-rows { display: grid; gap: 7px; }
+    .example-row { display: grid; grid-template-columns: 112px 1fr; align-items: center; min-height: 50px; border-radius: 10px; background: #f7f8fa; padding: 9px 12px; gap: 10px; }
+    .row-label { font-weight: 720; font-size: 13px; display: flex; gap: 9px; align-items: center; }
+    .row-label b { color: #32608d; font-size: 17px; }
+    .row-copy { color: #3a4762; font-size: 13px; }
+    .reference { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; border: 1px solid var(--line); border-radius: 12px; margin-top: 13px; padding: 9px 12px; }
+    .reference-title { font-weight: 700; font-size: 13px; }
+    .reference-title small { display: block; color: var(--muted); font-weight: 500; font-size: 11px; }
+    .levels { display: flex; gap: 6px; }
+    .level { width: 35px; height: 35px; border-radius: 50%; border: 0; background: #f0f2f5; color: #46516a; font-size: 13px; }
+    .level[aria-pressed="true"] { background: #bcecf0; color: #075b6e; font-weight: 760; }
+    .reference-summary { grid-column: 1 / -1; color: #58657d; font-size: 12px; padding: 0 1px 2px; }
+    .reference-note { grid-column: 1 / -1; color: #788398; font-size: 11px; }
+    .reference-source { grid-column: 1 / -1; color: #788398; font-size: 11px; }
+    .text-link { border: 0; background: none; color: var(--blue); padding: 0; font-size: 13px; font-weight: 650; align-self: flex-start; margin-top: 12px; }
+    .recent { margin: 19px 0 0; padding: 0 18px; }
+    .recent-head { border-top: 1px solid var(--line); padding-top: 13px; color: #68738a; text-transform: uppercase; letter-spacing: .08em; font-size: 11px; font-weight: 750; }
+    .recent button { width: 100%; min-height: 48px; text-align: left; display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 10px 13px; color: var(--ink); }
+    .recent button span:last-child { margin-left: auto; color: var(--blue); }
+    .notice { color: #737e91; text-align: center; font-size: 12px; margin: 23px 0 0; }
+    .workspace, .guide { margin-top: 22px; padding: 24px; }
+    .workspace[hidden], .guide[hidden], .home[hidden] { display: none; }
+    .workspace-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; margin-bottom: 18px; }
+    .workspace-head h2 { font: 500 36px/1.1 var(--serif); }
+    .outline { border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 10px; padding: 9px 13px; }
+    .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+    .plan-field { border: 1px solid var(--line); border-radius: 14px; padding: 15px; background: #fff; }
+    .plan-field textarea { min-height: 68px; font-size: 14px; }
+    .domain-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0 5px; }
+    .domain-tab { background: #fff; border: 1px solid var(--line); color: #59667e; border-radius: 999px; padding: 9px 14px; }
+    .domain-tab[aria-pressed="true"] { color: #075c67; background: var(--soft-teal); border-color: #a6dcda; font-weight: 700; }
+    .guide-title { display: flex; justify-content: space-between; align-items: end; gap: 18px; flex-wrap: wrap; }
+    .guide-title h2 { font: 500 38px/1.1 var(--serif); margin: 4px 0; }
+    .guide-levels { display: flex; gap: 7px; }
+    .guide-level { border: 1px solid var(--line); background: #fff; border-radius: 999px; min-width: 43px; min-height: 42px; color: #4f5c73; }
+    .guide-level[aria-pressed="true"] { background: var(--ink); color: #fff; }
+    .guide-intro { color: var(--muted); max-width: 800px; margin: 4px 0 18px; }
+    .domain-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
+    .domain-card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+    .domain-card header { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .domain-card h3 { margin: 0; font: 600 21px/1.2 var(--serif); }
+    .mode-tag { border-radius: 999px; color: #44637a; background: #f1f6f8; padding: 4px 9px; font-size: 11px; }
+    .domain-card p { margin: 0; color: #505d74; font-size: 14px; }
+    .source-note { background: #f0f5fb; border-radius: 12px; padding: 13px 15px; margin-top: 14px; color: #4b5c76; font-size: 13px; }
+    .source-note a { color: #216ac3; }
+    .prototype-note { background: #f3f8fb; border: 1px solid #dfeaf1; border-radius: 11px; padding: 11px 13px; color: #52647a; font-size: 12px; margin: 10px 0 0; }
+    .suggestions { background: #f8fbfb; border: 1px solid #e0eceb; border-radius: 14px; padding: 16px; margin: 14px 0; }
+    .suggestions-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .suggestions h3 { margin: 0; font: 600 21px/1.2 var(--serif); }
+    .suggestions-help { color: var(--muted); font-size: 12px; margin: 4px 0 12px; }
+    .suggestion-cards { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .suggestion-card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; align-items: flex-start; }
+    .suggestion-card h4 { font-size: 17px; margin: 7px 0 6px; }
+    .suggestion-card p { font-size: 13px; color: #4d5a72; margin: 0 0 7px; }
+    .suggestion-card strong { color: #303e59; }
+    .evidence-panel { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 9px; margin: 12px 0 18px; }
+    .evidence-item { background: #f3f6f8; border-radius: 11px; padding: 11px 13px; min-width: 0; }
+    .evidence-item strong { display: block; color: #34435e; font-size: 12px; margin-bottom: 4px; }
+    .evidence-item p { color: #59667d; font-size: 12px; margin: 0; overflow-wrap: anywhere; }
+    .evidence-item a { display: inline-block; margin-top: 6px; color: #216ac3; font-size: 12px; }
+    .adjust-actions { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0 16px; }
+    .adjust-actions[hidden], .adjust-note[hidden] { display: none; }
+    .adjust-actions button { min-height: 40px; border: 1px solid #b9d9d8; border-radius: 10px; background: #fff; color: #17696b; padding: 8px 12px; font-weight: 650; }
+    .adjust-actions button:hover, .adjust-actions button:focus-visible { background: #eff9f7; }
+    .adjust-actions button:disabled { cursor: wait; opacity: .65; }
+    .adjust-note { color: var(--muted); font-size: 11px; margin: -8px 0 14px; }
+    .plan-heading { margin: 20px 0 3px; font: 600 22px/1.2 var(--serif); }
+    .plan-explainer { margin: 0 0 12px; color: var(--muted); font-size: 13px; }
+    .field-help { color: var(--muted); font-size: 12px; line-height: 1.4; margin: -3px 0 8px; }
+    .plan-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+    .saved { min-height: 22px; color: #19745f; font-size: 13px; font-weight: 650; }
+    .button-row { display: flex; gap: 8px; }
+    .button-row .primary { width: auto; min-width: 165px; padding: 0 18px; margin: 0; }
+    footer { max-width: 1480px; margin: 0 auto; border-top: 1px solid var(--line); padding: 18px 28px 30px; color: #778197; font-size: 12px; display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+    @media (max-width: 900px) {
+      .topbar { padding: 0 18px; gap: 20px; }
+      .nav { gap: 15px; }
+      main { padding: 22px 16px 40px; }
+      .columns { grid-template-columns: 1fr; }
+      .hero { padding-left: 5px; }
+      .example-panel { min-height: unset; }
+      .recent { padding: 0 4px; }
+    }
+    @media (max-width: 600px) {
+      .topbar { height: 62px; gap: 14px; padding: 0 13px; }
+      .brand { font-size: 22px; }
+      .nav { gap: 10px; }
+      .nav button { font-size: 12px; }
+      .help { font-size: 0; gap: 0; }
+      main { padding: 17px 12px 30px; }
+      .hero { padding: 7px 3px 18px; }
+      .hero p { font-size: 16px; }
+      .prompt-panel, .example-panel { padding: 17px 15px; }
+      .quick-starts { grid-template-columns: 1fr; }
+      .quick { min-height: 43px; }
+      .context-fields, .plan-grid, .domain-grid { grid-template-columns: 1fr; }
+      .suggestion-cards { grid-template-columns: 1fr; }
+      .evidence-panel { grid-template-columns: 1fr; }
+      .example-row { grid-template-columns: 100px 1fr; }
+      .reference { grid-template-columns: 1fr; }
+      .levels { justify-content: space-between; }
+      .workspace, .guide { padding: 17px 14px; }
+      .workspace-head h2, .guide-title h2 { font-size: 30px; }
+      .guide-levels { width: 100%; justify-content: space-between; }
+      .guide-level { flex: 1; }
+      footer { padding: 15px 14px 25px; }
+    }
+    @media print {
+      .topbar, .home, .guide, .notice, .plan-actions .button-row { display: none !important; }
+      body { background: #fff; }
+      main { padding: 0; }
+      .workspace { display: block !important; border: 0; box-shadow: none; }
+      .plan-field { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="#" class="brand" aria-label="WeGo home" onclick="showView('plan'); return false;"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>WeGo</a>
+    <nav class="nav" aria-label="Main navigation">
+      <button class="active" id="nav-plan" type="button" onclick="showView('plan')">Plan next steps</button>
+      <button id="nav-guide" type="button" onclick="showView('guide')">Domain guide</button>
+    </nav>
+    <button class="help" type="button" onclick="document.getElementById('source-note').scrollIntoView({behavior:'smooth',block:'center'})"><span class="help-dot">?</span>First time here?</button>
+  </header>
+
+  <main>
+    <section class="home" id="home-view">
+      <div class="hero">
+        <div class="eyebrow">Your planning workspace</div>
+        <h1>Where do we go from here?</h1>
+        <p>Start with the classroom moment. Add context as you go.</p>
+      </div>
+
+      <div class="columns">
+        <section class="panel prompt-panel" aria-labelledby="prompt-title">
+          <div class="section-kicker"><span class="kicker-icon" aria-hidden="true">✎</span>Start with the classroom moment</div>
+          <h2 id="prompt-title">What are you trying to plan or solve?</h2>
+          <p class="helper" id="planning-intro">Describe the assignment and what you’re seeing. WeGo will suggest a next step.</p>
+          <label for="classroom-moment">What are students working on?</label>
+          <textarea id="classroom-moment" aria-describedby="classroom-moment-help">My Grade 4 groups are researching different Earth spheres. They need support selecting useful facts and organizing a clear presentation for classmates.</textarea>
+          <p class="field-help" id="classroom-moment-help">The Earth-spheres text is a sample. Replace it with your class task. Example: “Students are writing an essay about ___. The prompt asks them to ___.” Include the exact question if you have it.</p>
+          <label for="observed-evidence" style="margin-top:11px">What can students do now, and where are they getting stuck?</label>
+          <textarea id="observed-evidence" style="min-height:72px;font-size:14px" aria-describedby="observed-evidence-help">They can find facts in a source or visual, but need help choosing details and organizing speaking turns.</textarea>
+          <p class="field-help" id="observed-evidence-help">Example: “They can state an opinion, but aren’t yet explaining how a detail supports it.” A rough observation is enough.</p>
+          <p class="privacy" id="privacy-notice"><span aria-hidden="true">▣</span> Live suggestions and requested AI revisions send these notes to OpenAI and may use paid credits. Don’t include names or private student details.</p>
+          <div class="topic-chips" id="topic-chips" aria-label="Assigned research topics"><span>Biosphere</span><span>Rhizosphere</span><span>Lithosphere</span><span>Hydrosphere</span></div>
+          <div class="quick-label">Quick starts</div>
+          <div class="quick-starts">
+            <button class="quick" type="button" onclick="quickStart('domain')">Plan by domain <span>›</span></button>
+            <button class="quick" type="button" onclick="quickStart('writing')">Support writing <span>›</span></button>
+            <button class="quick" type="button" onclick="quickStart('frame')">Build a sentence frame <span>›</span></button>
+            <button class="quick" type="button" onclick="quickStart('narrative')">Try small-moment narrative <span>›</span></button>
+          </div>
+          <details class="context" open>
+            <summary><span>Planning context (optional)</span><span>⌄</span></summary>
+            <div class="context-preview"><span id="context-preview-text">Grades 4–5 · Science · Inform · Speaking</span><span>Edit</span></div>
+            <div class="context-fields">
+              <div><label for="grade">Grade cluster</label><select id="grade"><option>Grades 4–5</option><option>Grades 2–3</option><option>Grades 6–8</option><option>Grades 9–12</option><option>Kindergarten</option><option>Grade 1</option></select></div>
+              <div><label for="subject">Content</label><select id="subject"><option>Science</option><option>Language arts</option><option>Mathematics</option><option>Social studies</option></select></div>
+              <div><label for="klu">Language use</label><select id="klu"><option selected>Inform</option><option>Explain</option><option>Narrate</option><option>Argue</option></select></div>
+              <div><label for="domain-choice">Focus domain</label><select id="domain-choice"><option>Listening</option><option>Reading</option><option selected>Speaking</option><option>Writing</option></select></div>
+            </div>
+            <p class="field-help" id="language-use-help">Argue means supporting an opinion or interpretation with reasons and relevant evidence; it does not require a debate.</p>
+          </details>
+          <button class="primary" type="button" onclick="startPlanning()">Suggest a next step <span aria-hidden="true">→</span></button>
+          <p class="prototype-note" id="connection-status" role="status" aria-live="polite">Sample mode: prepared examples work now. Live suggestions will use your lesson notes after the private API connection is configured.</p>
+        </section>
+
+        <section class="panel example-panel" aria-labelledby="example-title">
+          <div class="section-kicker"><span class="kicker-icon" aria-hidden="true">▤</span>A worked example</div>
+          <h2 id="example-title">From evidence to next move</h2>
+          <div class="context-line" id="example-context">Grades 4–5 · Science · Inform · Group research presentation</div>
+          <div class="example-rows">
+            <div class="example-row"><div class="row-label"><b>⌕</b>Evidence</div><div class="row-copy" id="example-evidence">Finds facts in a source; needs help choosing details and organizing turns.</div></div>
+            <div class="example-row"><div class="row-label"><b>◎</b>Next move</div><div class="row-copy" id="example-move">Select two accurate facts and present them in a clear order.</div></div>
+            <div class="example-row"><div class="row-label"><b>♧</b>Try</div><div class="row-copy" id="example-support">Shared research organizer · visual glossary · partner rehearsal.</div></div>
+            <div class="example-row"><div class="row-label"><b>♧</b>Look for</div><div class="row-copy" id="example-lookfor">Each speaker shares a relevant detail and points to its source or visual.</div></div>
+          </div>
+          <div class="reference">
+            <div class="reference-title"><span id="reference-domain-title">Speaking reference</span><small id="reference-mode">Expressive mode · optional reference</small></div>
+            <div class="levels" role="group" aria-label="Choose a planning reference level">
+              <button class="level" aria-pressed="false" type="button" onclick="setLevel(1)">1</button>
+              <button class="level" aria-pressed="false" type="button" onclick="setLevel(2)">2</button>
+              <button class="level" aria-pressed="false" type="button" onclick="setLevel(3)">3</button>
+              <button class="level" aria-pressed="false" type="button" onclick="setLevel(4)">4</button>
+              <button class="level" aria-pressed="false" type="button" onclick="setLevel(5)">5</button>
+              <button class="level" aria-pressed="false" type="button" onclick="setLevel(6)">6</button>
+          </div>
+          <div class="reference-summary" id="reference-summary" aria-live="polite">Choose a number to view an optional planning reference. WeGo does not assign it to a learner.</div>
+          <div class="reference-note">Optional planning reference—not a student rating or a required sequence. Suggestions don’t need a selected level.</div>
+          <div class="reference-source">These task-facing examples are WeGo interpretations informed by WIDA, not official WIDA descriptors.</div>
+          </div>
+          <button class="text-link" type="button" onclick="showView('guide')">Explore all four domains <span aria-hidden="true">→</span></button>
+        </section>
+      </div>
+
+      <section class="recent" aria-label="Sample lessons">
+        <div class="recent-head">Sample lessons</div>
+        <button type="button" onclick="openRecent('earth')"><span aria-hidden="true">▤</span><span>Earth spheres presentation · Grade 4 · Open sample</span><span>›</span></button>
+        <button type="button" onclick="openRecent('narrative')" style="margin-top:7px"><span aria-hidden="true">▤</span><span>Small-moment narrative · Grade 4 · Open sample</span><span>›</span></button>
+        <button type="button" onclick="openRecent('literary')" style="margin-top:7px"><span aria-hidden="true">▤</span><span>Literary essay · Grade 4–5 · Open sample</span><span>›</span></button>
+      </section>
+      <p class="notice">Planning references support teacher judgment. They do not assign a proficiency level or prescribe one next step.</p>
+    </section>
+
+    <section class="panel workspace" id="workspace" hidden aria-labelledby="workspace-title">
+      <div class="workspace-head">
+        <div><div class="eyebrow" id="workspace-context">Grades 4–5 · Science · Inform</div><h2 id="workspace-title">One next step to try</h2><p class="helper">WeGo drafts one move, one practice, and one thing to look for. Edit the wording to fit your class.</p></div>
+        <button class="outline" type="button" onclick="showView('plan')">← Back to workspace</button>
+      </div>
+      <p class="prototype-note" id="workspace-note">Prepared examples are shown in sample mode. When live AI is connected, WeGo will use the lesson, observation, and selected context to draft one next step.</p>
+      <div class="domain-tabs" role="group" aria-label="Choose a language domain">
+        <button class="domain-tab" data-domain="Listening" aria-pressed="false" type="button" onclick="setDomain('Listening')">Listening</button>
+        <button class="domain-tab" data-domain="Reading" aria-pressed="false" type="button" onclick="setDomain('Reading')">Reading</button>
+        <button class="domain-tab" data-domain="Speaking" aria-pressed="true" type="button" onclick="setDomain('Speaking')">Speaking</button>
+        <button class="domain-tab" data-domain="Writing" aria-pressed="false" type="button" onclick="setDomain('Writing')">Writing</button>
+      </div>
+      <button class="outline" id="refresh-suggestions" type="button" onclick="requestSuggestions()">Draft a next step for this domain</button>
+      <p class="helper"><span id="workspace-mode">Speaking draws on the Expressive mode reference.</span> No level needs to be assigned. <button class="text-link" type="button" style="display:inline;margin:0" onclick="showView('guide')">View optional level references</button></p>
+      <section class="suggestions" aria-labelledby="suggestions-heading">
+        <div class="suggestions-head"><h3 id="suggestions-heading">Your focused next step</h3><span id="suggestion-purpose" class="mode-tag">Inform · prepared example</span></div>
+        <p class="suggestions-help" id="suggestions-help">This draft is filled in below. Change any wording directly; you don’t need to start over.</p>
+        <p class="helper" id="ai-summary" hidden></p>
+        <div class="suggestion-cards" id="suggestion-cards" aria-live="polite"></div>
+      </section>
+      <section class="evidence-panel" aria-label="What this suggestion draws on">
+        <div class="evidence-item"><strong>What you noticed</strong><p id="evidence-used">Your classroom observation will appear here.</p></div>
+        <div class="evidence-item"><strong>WIDA planning lens</strong><p id="wida-lens">Selected language use and domain, used as a planning reference—not a student rating.</p><a href="https://wida.wisc.edu/sites/default/files/resource/WIDA-ELD-Standards-Framework-2020-Edition-Grades-4-5.pdf" target="_blank" rel="noreferrer">Check the Grades 4–5 framework</a></div>
+        <div class="evidence-item"><strong>Check this assumption</strong><p id="assumption-used">WeGo has not seen student work or lesson materials. Confirm the draft fits what students have practiced.</p></div>
+      </section>
+      <div class="adjust-actions" id="adjust-actions" hidden aria-label="Adjust the AI suggestion">
+        <button type="button" onclick="adjustSuggestion('more_support')">Add more support</button>
+        <button type="button" onclick="adjustSuggestion('shorter_practice')">Make practice shorter</button>
+        <button type="button" onclick="adjustSuggestion('stretch')">Add a stretch</button>
+      </div>
+      <p class="adjust-note" id="adjust-note" hidden>These revisions use another AI request. You can always edit the fields yourself.</p>
+      <h3 class="plan-heading">Edit your co-planning note</h3>
+      <p class="plan-explainer">WeGo filled these from the draft above. Keep, change, or simplify anything before sharing.</p>
+      <div class="plan-grid">
+        <div class="plan-field"><label for="noticed">What students are doing now</label><p class="field-help" id="noticed-help">Your observation in your words. Example: “They have an idea, but haven’t linked it to evidence yet.”</p><textarea id="noticed" placeholder="Add what you heard or saw, if you have it." aria-describedby="noticed-help"></textarea></div>
+        <div class="plan-field"><label for="next-move">One next language move</label><p class="field-help" id="next-move-help">What students will practice saying, reading, listening for, or writing.</p><textarea id="next-move" placeholder="WeGo will suggest one move based on your task and notes." aria-describedby="next-move-help"></textarea></div>
+        <div class="plan-field"><label for="support">One practice to try</label><p class="field-help" id="support-help">A short student activity, such as a model, partner rehearsal, annotation, or organizer. Example: “Rehearse the idea and evidence aloud with a partner.”</p><textarea id="support" placeholder="WeGo will suggest one practice students can try." aria-describedby="support-help"></textarea></div>
+        <div class="plan-field"><label for="look-for">One thing to look or listen for</label><p class="field-help" id="look-for-help">A sign students are trying the language move. Example: “They explain why the detail supports their idea.”</p><textarea id="look-for" placeholder="WeGo will suggest one observable sign of progress." aria-describedby="look-for-help"></textarea></div>
+      </div>
+      <div class="plan-actions"><div class="saved" id="saved-message" aria-live="polite"></div><div class="button-row"><button class="outline" type="button" onclick="copyPlan()">Copy note</button><button class="outline" type="button" onclick="window.print()">Print</button><button class="primary" type="button" onclick="savePlan()">Prepare co-planning note</button></div></div>
+      <textarea id="note-output" aria-label="Prepared co-planning note" readonly hidden style="margin-top:12px;min-height:170px"></textarea>
+    </section>
+
+    <section class="panel guide" id="guide-view" hidden aria-labelledby="guide-heading">
+      <div class="guide-title"><div><div class="eyebrow" id="guide-context">Grades 4–5 · Science · Inform</div><h2 id="guide-heading">Domain guide</h2></div><div class="guide-levels" role="group" aria-label="Choose a reference level">
+        <button class="guide-level" aria-pressed="false" type="button" onclick="setGuideLevel(1)">1</button><button class="guide-level" aria-pressed="false" type="button" onclick="setGuideLevel(2)">2</button><button class="guide-level" aria-pressed="false" type="button" onclick="setGuideLevel(3)">3</button><button class="guide-level" aria-pressed="false" type="button" onclick="setGuideLevel(4)">4</button><button class="guide-level" aria-pressed="false" type="button" onclick="setGuideLevel(5)">5</button><button class="guide-level" aria-pressed="false" type="button" onclick="setGuideLevel(6)">6</button>
+      </div></div>
+      <p class="guide-intro" id="guide-intro">These optional references help teachers consider possible language demands. They are not a required sequence or a score for a learner. Choose a number only if it helps with this planning conversation.</p>
+      <div class="domain-grid" id="domain-grid"></div>
+      <div class="source-note" id="source-note"><strong>About the references.</strong> <span id="source-note-copy">WIDA’s Grades 4–5 2020 Proficiency Level Descriptors are organized by Interpretive and Expressive modes; WeGo offers separate domain views with original, task-specific examples. These are planning references, not official WIDA descriptors or student scores.</span> <a href="https://wida.wisc.edu/sites/default/files/resource/WIDA-ELD-Standards-Framework-2020-Edition-Grades-4-5.pdf" target="_blank" rel="noreferrer">Open the WIDA Grades 4–5 framework</a> · <a href="https://wida.wisc.edu/resources/introduction-updated-key-language-uses" target="_blank" rel="noreferrer">Read about WIDA Key Language Uses</a>.</div>
+    </section>
+  </main>
+  <footer><span>WeGo · A planning companion for multilingual classrooms</span><span>Grade 4 pilot · Prepared examples + optional live suggestions</span></footer>
+
+  <script>
+    const hasLocalSuggestionServer = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    const domains = {
+      Listening: {
+        mode: 'Interpretive',
+        levels: [
+          'With visuals, gestures, repetition, or familiar words, identify the topic or a key word in directions or a short presentation.',
+          'Follow short, related statements about the topic and identify an explicitly stated fact, especially with repeated key words or visuals.',
+          'Connect a short series of related spoken details and use repeated words or simple transitions to follow the order of ideas.',
+          'Follow a connected presentation and notice how its main topic, details, and visuals fit across several sentences.',
+          'Track an organized presentation and follow relationships among key ideas, supporting facts, examples, and visuals.',
+          'Follow discipline-specific organization and synthesize relevant ideas and details across a presentation and its visuals.'
+        ]
+      },
+      Reading: {
+        mode: 'Interpretive',
+        levels: [
+          'Use pictures, labels, a glossary, or headings to locate a familiar topic word or labeled feature.',
+          'Read labels, captions, or simple sentences to find a stated fact about the assigned sphere.',
+          'Connect details across short related sentences, headings, captions, and a supporting visual.',
+          'Follow informational text with connected ideas; use headings, linking words, and diagrams to connect details.',
+          'Use a general text structure to track relationships among ideas and supporting information across a text or source set.',
+          'Synthesize relevant information across discipline-specific texts and visuals, noticing how organization signals relationships.'
+        ]
+      },
+      Speaking: {
+        mode: 'Expressive',
+        levels: [
+          'Share a label, rehearsed phrase, gesture-supported idea, or emerging sentence naming the assigned sphere or a feature.',
+          'Use simple sentences to introduce the sphere and share a related fact using familiar topic words.',
+          'Give a short, organized presentation with related facts and familiar connectors such as and, also, or because when relevant.',
+          'Present connected information with a clear general organization, relevant detail, and more than one way to connect ideas.',
+          'Organize a report for its audience and purpose; connect selected facts and examples with increasingly precise topic language.',
+          'Deliver a coherent, discipline-appropriate presentation that selects and links information strategically for the audience.'
+        ]
+      },
+      Writing: {
+        mode: 'Expressive',
+        levels: [
+          'Label a drawing or slide with familiar words or short phrases; add a copied or emerging sentence with support.',
+          'Write a simple caption or sentence that names the sphere and adds one related fact or detail.',
+          'Group short notes or sentences under a heading and connect related facts with familiar transitions.',
+          'Write connected notes or a paragraph with a clear topic, supporting details, and varied sentence openings or links.',
+          'Organize information for the audience and purpose; connect relevant facts and examples with flexible cohesive and sentence choices.',
+          'Create cohesive presentation notes or visuals with purposeful organization, precise language, and varied ways to connect complex ideas.'
+        ]
+      }
+    };
+    const narrativeLevels = {
+      Listening: [
+        'With a picture, gesture, or repeated key words, notice a familiar person, action, or feeling in a short story.',
+        'Follow related sentences about a small event and identify an explicitly stated action or detail.',
+        'Follow a short sequence of events, using familiar time words and repeated references to people or places.',
+        'Track a connected retelling and notice how selected details help establish the moment or a character’s response.',
+        'Follow how events, character actions, dialogue, and descriptive details relate across a short narrative.',
+        'Synthesize how sequence and language choices guide an audience’s understanding of a narrative moment.'
+      ],
+      Reading: [
+        'Use pictures and familiar words to locate a person, place, action, or feeling in a short narrative.',
+        'Read related simple sentences and identify a stated event or character detail.',
+        'Connect a few details across a short narrative and follow familiar time words or references to a character.',
+        'Follow how a short narrative introduces a moment and links details across its events.',
+        'Analyze how a character’s actions, dialogue, or descriptive details shape the reader’s understanding.',
+        'Interpret how narrative organization and language choices create meaning or an effect for an audience.'
+      ],
+      Speaking: [
+        'Name or point to a person, action, or place; share a familiar word or short phrase about the moment.',
+        'Use simple sentences to describe an event and add a related action, person, or feeling.',
+        'Retell a small moment in a short sequence, using familiar time words and a few relevant details.',
+        'Share a connected narrative with context, linked events, and details that help listeners follow the moment.',
+        'Use selected actions, dialogue, or description to develop a character or help the audience infer a response.',
+        'Adjust sequence, detail, and language choices to shape how an audience understands the narrative.'
+      ],
+      Writing: [
+        'Label a drawing or add familiar words about a person, place, or action in the small moment.',
+        'Write simple sentences that name what happened and add a related action or detail.',
+        'Write a short connected narrative with a clear event sequence and one or more relevant details.',
+        'Develop a focused moment with context, linked actions, and details that help a reader follow what happened.',
+        'Choose description, action, dialogue, or thought to develop a character and guide what the reader infers.',
+        'Shape sequence and language flexibly so details serve the writer’s meaning and the intended audience.'
+      ]
+    };
+    const argumentLevels = {
+      Listening: [
+        'With a visual or repeated topic words, identify the topic or a familiar idea in a short spoken opinion.',
+        'Follow short statements and identify an explicitly stated opinion and a related reason.',
+        'Connect a speaker’s reason or example to the opinion it supports across a short exchange.',
+        'Follow an organized argument and notice how reasons and details support the speaker’s position.',
+        'Track how a speaker connects a position to relevant reasons, evidence, and examples.',
+        'Synthesize a position and its support across a discussion; consider another view when the task calls for it.'
+      ],
+      Reading: [
+        'Use pictures, headings, or familiar words to locate the topic or a named person in a short text.',
+        'Find an explicitly stated story detail that relates to the teacher’s essay question.',
+        'Connect a relevant story detail to an idea in a nearby sentence or paragraph.',
+        'Identify the opinion or interpretation in a model and follow how a detail supports it.',
+        'Analyze how a writer links relevant textual evidence and reasoning to an interpretation.',
+        'Compare interpretations across texts or passages and consider how evidence and organization shape each argument.'
+      ],
+      Speaking: [
+        'Share an idea with a familiar word, short phrase, gesture, or point to a relevant passage.',
+        'State a simple opinion and add a related reason or story detail.',
+        'State an interpretation, select a relevant detail, and explain the connection in the learner’s own words.',
+        'Present a connected claim with relevant evidence and reasoning, using familiar linking language as useful.',
+        'Develop a position with selected evidence and a clear explanation for an audience.',
+        'Adjust or qualify an interpretation with evidence; address another view when the prompt asks for it.'
+      ],
+      Writing: [
+        'Choose, dictate, or write a short idea about the text and point to a relevant detail with support.',
+        'Write a simple opinion and add one related story detail or reason.',
+        'State an interpretation, include a relevant textual detail, and explain why it fits the idea.',
+        'Develop a connected paragraph that links an interpretation to evidence and reasoning.',
+        'Organize an essay with a clear position, relevant details and reasons, an appropriate style, and a conclusion.',
+        'Craft a cohesive literary argument with precise evidence and reasoning; consider another interpretation when the prompt calls for it.'
+      ]
+    };
+    const samples = {
+      earth: {
+        subject: 'Science', klu: 'Inform', domain: 'Speaking',
+        task: 'My Grade 4 groups are researching different Earth spheres. They need support selecting useful facts and organizing a clear presentation for classmates.',
+        evidence: 'They can find facts in a source or visual, but need help choosing details and organizing speaking turns.',
+        topics: ['Biosphere', 'Rhizosphere', 'Lithosphere', 'Hydrosphere'],
+        context: 'Grades 4–5 · Science · Inform · Group research presentation',
+        exampleEvidence: 'Finds facts in a source; needs help choosing details and organizing turns.',
+        exampleMove: 'Select two accurate facts and present them in a clear order.',
+        exampleSupport: 'Shared research organizer · visual glossary · partner rehearsal.',
+        exampleLookFor: 'Each speaker shares a relevant detail and points to its source or visual.',
+        note: 'This is one prepared Earth-spheres example matched to the selected domain and language purpose. WeGo has not analyzed your notes or identified a learner’s level.',
+        guide: 'For this group research presentation, Inform is the likely primary purpose. Add Explain if students are also expected to describe how or why spheres connect. Choose a reference point to see flexible prompts across domains; consider the learner’s evidence and supports in this task.',
+        planHelp: 'One prepared example is shown. Check that groups already have accurate facts; if they are still researching, edit the move to focus on selecting useful details first.',
+        sourceNote: 'WIDA’s Grades 4–5 PLDs use Interpretive and Expressive communication modes. WeGo’s Earth-spheres examples are original task-facing interpretations, not official WIDA wording or student scores.'
+      },
+      narrative: {
+        subject: 'Language arts', klu: 'Narrate', domain: 'Writing',
+        task: 'My Grade 4 students are writing a small-moment personal narrative. We are practicing “show, don’t tell” as one way to develop a moment for a reader.',
+        evidence: 'Sample observation: Writers can name an event and its feeling. Some drafts stop at statements like “I was nervous” before developing what a reader might picture. Edit this to match what you have noticed.',
+        topics: ['Small-moment personal narrative', 'WIDA KLU: Narrate', 'Craft move: show, don’t tell'],
+        context: 'Grades 4–5 · Language arts · Narrate · Small-moment personal narrative',
+        exampleEvidence: 'Sample: writers can name an event and its feeling; some drafts stop at “I was nervous” before developing the moment.',
+        exampleMove: 'Study how one mentor-text detail helps a reader infer, then jointly expand a different small moment with student-chosen detail.',
+        exampleSupport: 'Compare a teacher-created “I was nervous” with an action detail. Then analyze a mentor excerpt and co-compose a different moment from student ideas.',
+        exampleLookFor: 'A chosen detail helps the reader picture or infer something meaningful while the writer keeps ownership of the moment and voice.',
+        note: 'This is one prepared Narrate example for a small-moment writing sample. The evidence is only an editable example, not a claim about your students. WeGo has not analyzed your notes or identified a learner’s level.',
+        guide: 'For this small-moment personal narrative, Narrate is the selected language use. WIDA’s Grades 4–5 Language Arts expectation attends to context, character development, event sequence, and audience. “Show, don’t tell” is a classroom craft strategy, not WIDA wording or a rule for every sentence. Choose a reference point as one lens; use evidence from this task.',
+        planHelp: 'This example starts with mentor-text study. If the class has already done that, edit the plan toward joint rehearsal or independent writing.',
+        sourceNote: 'WIDA ELD-LA.4-5.Narrate.Expressive names context, character development, event sequence, and audience. This sample’s reference prompts are original WeGo interpretations informed by WIDA’s mode-based PLDs, not official descriptor text.'
+      },
+      literary: {
+        subject: 'Language arts', klu: 'Argue', domain: 'Writing',
+        task: 'My Grade 4–5 students are beginning a literary essay about The Invisible Boy. Our essay prompt is: [add the exact class question]. Students will share an interpretation, choose a relevant detail from the book, and explain how the detail supports the interpretation.',
+        evidence: '',
+        topics: ['Literary essay', 'WIDA Key Language Use: Argue', 'Writing · Expressive'],
+        context: 'Grades 4–5 · Language arts · Argue · Literary essay',
+        exampleEvidence: 'Add what students have done so far: discussion, reading notes, mentor-text analysis, or a shared draft.',
+        exampleMove: 'Connect a student-generated interpretation to a relevant story detail and explain why it supports the idea.',
+        exampleSupport: 'Use the actual essay question and student-selected details; rehearse the evidence-to-idea connection before drafting.',
+        exampleLookFor: 'The writer selects a relevant detail and explains its connection in their own words.',
+        note: 'This is a prepared task setup, not analysis of your students. Add the exact essay question and one recent observation before requesting live suggestions. WeGo will not invent story events or quotations.',
+        guide: 'For a literary essay, Argue means supporting an interpretation or opinion with reasons and relevant text evidence; it does not mean students must debate. WIDA’s Grades 4–5 Language Arts expectation also attends to clear topic development, appropriate evidence, style, and a conclusion. Use the exact class prompt and student evidence to guide next steps.',
+        planHelp: 'This example starts with mentor-text analysis. Check the exact essay question and whether students have already studied how a literary argument uses evidence.',
+        sourceNote: 'WIDA ELD-LA.4-5.Argue.Expressive focuses on developing a topic and opinion, supporting it with reasons and information, using an appropriate formal style, connecting the opinion to evidence, and concluding. The six prompts here are original WeGo planning examples, not official WIDA descriptors or essay scores.'
+      }
+    };
+    const suggestionLibrary = {
+      Inform: {
+        Listening: [
+          { title: 'Catch the main facts', move: 'Listen for two key facts about the assigned sphere and record them in a short note.', support: 'Preview topic words and give the listener a two-box note catcher: “fact” and “visual/source.”', lookFor: 'The learner records or restates a relevant fact and connects it to a visual or source.', why: 'This supports following and retaining information during group research and presentations.' },
+          { title: 'Build on a classmate’s idea', move: 'Restate one fact from a peer and add a related detail or a question.', support: 'Model a short response such as “I heard that ___. I want to add ___.” Rehearse with a partner.', lookFor: 'The learner accurately responds to a peer’s idea using a relevant detail or question.', why: 'This creates a supported way to participate in group discussion before presenting.' }
+        ],
+        Reading: [
+          { title: 'Select useful facts from a source', move: 'Choose two accurate facts that help describe the assigned sphere to classmates.', support: 'Use a picture-supported organizer with the headings “fact,” “where I found it,” and “why it helps.”', lookFor: 'The learner selects relevant facts and points to the matching words, image, or diagram.', why: 'This connects research reading to the information students need for their presentation.' },
+          { title: 'Match text details to a visual', move: 'Connect a fact in the text to a label, feature, or example in a diagram.', support: 'Provide a visual glossary and color-code one matching phrase and diagram label together.', lookFor: 'The learner identifies a text detail and its matching visual feature.', why: 'This helps learners use both written and visual information when researching science.' }
+        ],
+        Speaking: [
+          { title: 'Organize facts for listeners', move: 'Choose two accurate facts and share them in an order that helps classmates understand the sphere.', support: 'Sort notes into “what it is” and “important features”; rehearse an opening such as “Our group researched…”.', lookFor: 'The learner contributes a relevant fact and connects it to the group’s source or visual.', why: 'This targets the organizing and sharing work required in an informative group presentation.' },
+          { title: 'Rehearse one clear contribution', move: 'Prepare one focused fact to contribute during the group presentation.', support: 'Offer a cue card and partner rehearsal with “One important fact is ___.”', lookFor: 'The learner shares an understandable fact using a topic word or a visual cue.', why: 'A small, rehearsed speaking turn gives each group member a concrete role.' }
+        ],
+        Writing: [
+          { title: 'Turn research into short notes', move: 'Record two selected facts in the learner’s own words under a clear heading.', support: 'Use a three-column organizer: “sphere,” “fact,” and “source/visual.” Model one note from a short source.', lookFor: 'The learner writes relevant notes that can be matched to a source or visual.', why: 'This makes writing part of the research process and prepares content for the presentation.' },
+          { title: 'Create a helpful caption', move: 'Write a short caption that names one feature of the assigned sphere and gives a related fact.', support: 'Provide a labeled image, a small topic-word bank, and the frame “This shows ___. One fact is ___.”', lookFor: 'The caption names a feature and adds an accurate detail that helps the audience.', why: 'A concise caption supports both written language practice and audience understanding.' }
+        ]
+      },
+      Explain: {
+        Listening: [
+          { title: 'Listen for a relationship', move: 'Notice when a speaker explains how two sphere features connect and record both parts of the connection.', support: 'Use a two-part note catcher: “sphere/feature A” and “connects to sphere/feature B.”', lookFor: 'The learner identifies both parts of a relationship stated by a speaker.', why: 'This supports listening for how or why Earth-system features interact.' },
+          { title: 'Restate the reason', move: 'Restate one explanation from a peer and identify the detail that supports it.', support: 'Model “I heard ___ connects to ___ because ___.” Pause after each part for partner rehearsal.', lookFor: 'The learner restates a relationship and includes a relevant reason or detail.', why: 'This makes the reasoning in peer explanations easier to follow and discuss.' }
+        ],
+        Reading: [
+          { title: 'Trace a connection in text and diagram', move: 'Use a text detail and a diagram to describe how two sphere features connect.', support: 'Annotate one matching detail in each source with the same color; use a frame such as “___ affects ___ because ___.”', lookFor: 'The learner links details from the text and visual to describe a supported relationship.', why: 'This helps learners coordinate information across science sources when explaining a connection.' },
+          { title: 'Compare two related features', move: 'Identify one way two sphere features interact or differ and find a detail that supports the idea.', support: 'Use a two-column comparison organizer and preview contrast or cause-and-effect words from the source.', lookFor: 'The learner names a relevant relationship and points to a supporting detail.', why: 'This gives the learner a clear reading purpose when the task includes how or why.' }
+        ],
+        Speaking: [
+          { title: 'Explain one sphere connection', move: 'Describe one accurate connection between the assigned sphere and another sphere, then give a reason.', support: 'Model “The ___ connects to ___ because ___.” Rehearse orally with a labeled diagram.', lookFor: 'The learner states a connection and supports it with a relevant detail.', why: 'This supports an Explain goal when the unit asks students to show how Earth systems interact.' },
+          { title: 'Connect a fact to a reason', move: 'Add a reason to a relevant fact using a connector such as because or so.', support: 'Provide two example facts and jointly model adding a reason before partner rehearsal.', lookFor: 'The learner links a fact with a reason that fits the science idea.', why: 'This builds a bridge from informing classmates to explaining why a detail matters.' }
+        ],
+        Writing: [
+          { title: 'Write a supported connection', move: 'Write one sentence explaining how two sphere features connect, using a fact or visual as evidence.', support: 'Use a labeled diagram and the frame “___ connects to ___ because ___.”', lookFor: 'The learner names both features and gives a reason supported by the task materials.', why: 'This focuses writing on a clear relationship and its supporting detail.' },
+          { title: 'Link evidence and explanation', move: 'Add a sentence that explains why a selected fact matters to the group’s science idea.', support: 'Pair a research note with a prompt: “This matters because…”; rehearse aloud before writing.', lookFor: 'The learner links a selected fact to a relevant explanation in writing.', why: 'This supports a written Explain goal without requiring a long report.' }
+        ]
+      },
+      Narrate: {
+        Listening: [
+          { title: 'Listen for the detail that changes the picture', stage: 'Explore a mentor text', move: 'After hearing a short, teacher-selected narrative excerpt, name one detail that helps you picture the moment or infer a character’s response.', support: 'Read the excerpt twice; offer a quick sketch or detail catcher with “action,” “words,” and “what I infer.”', lookFor: 'The learner points to or restates a detail and connects it to a reasonable inference about the moment.', why: 'This supports listening to how a narrative detail adds meaning for an audience.' },
+          { title: 'Follow the small-moment sequence', stage: 'Notice event sequence', move: 'Retell two or three linked events from a short narrative excerpt in order.', support: 'Use three blank picture boxes and let students sketch or select their own time words after listening.', lookFor: 'The learner communicates the event order and refers to at least one relevant detail.', why: 'This supports following and retelling narrative sequence without supplying the story content.' }
+        ],
+        Reading: [
+          { title: 'Notice what lets the reader infer', stage: 'Explore a mentor text', move: 'In a short mentor excerpt, find one place where the writer reveals a feeling through an action, thought, dialogue, or sensory detail; discuss its effect.', support: 'Reread a teacher-selected passage together. Ask, “What does the writer say directly? What might a reader infer from this detail?”', lookFor: 'The learner cites a specific detail and explains what it helps the reader picture or infer.', why: 'This makes a narrative language choice visible before students try a related choice in their own writing.' },
+          { title: 'Track the moment across events', stage: 'Explore a mentor text', move: 'Connect details across a short narrative to explain how the moment develops.', support: 'Mark who, where/when, and two event details in the mentor text; invite students to annotate in words, sketches, or another language.', lookFor: 'The learner links a detail to an event or character response instead of listing isolated words.', why: 'This connects text comprehension to WIDA’s Grades 4–5 narrative focus on context, characters, and event sequences.' }
+        ],
+        Speaking: [
+          { title: 'Rehearse one small moment aloud', stage: 'Oral rehearsal', move: 'Tell a partner a focused moment in a short sequence, then choose one detail that helps the listener picture it or infer a feeling.', support: 'Invite a quick sketch and oral rehearsal. The partner can ask, “What happened next?” or “What detail helped me picture it?”', lookFor: 'The learner shares linked events and selects a detail that supports the meaning they want to convey.', why: 'Oral rehearsal lets writers try out meaning and wording while keeping the story theirs.' },
+          { title: 'Listen for a partner’s intended meaning', stage: 'Audience response', move: 'After listening to a partner’s small moment, name what you understood and which detail led you to that idea.', support: 'Offer a listener prompt: “I pictured ___ when you said/showed ___.” Partners may point, sketch, or respond in their preferred language first.', lookFor: 'The listener refers to a detail and checks its meaning with the storyteller.', why: 'This gives the writer audience feedback without asking the partner to rewrite the story.' }
+        ],
+        Writing: [
+          { title: 'Explore a mentor writer’s choice first', stage: 'Explore the language of a text type', move: 'Analyze one mentor-text detail together and discuss how it shapes the reader’s picture or inference before students draft.', support: 'Begin with a teacher-created pair: “I was nervous” / “I kept rolling the paper corner while I waited.” Ask what each version does for the reader, then analyze a brief mentor excerpt for action, thought, dialogue, or sensory detail.', lookFor: 'Students can point to a detail and explain its effect in relation to the moment, not just label it “showing.”', why: 'Exploring language in a mentor text prepares students to make an intentional choice in their own narrative.' },
+          { title: 'Jointly expand a different small moment', stage: 'Joint construction', move: 'Co-compose a short, parallel moment from student ideas, adding one purposeful detail that helps the reader picture or infer what matters.', support: 'Let students supply and negotiate the event and wording while the teacher scribes and asks about audience effect. Then invite each writer to choose whether a detail would strengthen their own moment.', lookFor: 'The detail develops the writer’s meaning; students retain choice, voice, and control of their own story.', why: 'Dialogic rehearsal gives writers a supported try before they transfer the craft move to independent writing.' }
+        ]
+      },
+      Argue: {
+        Listening: [
+          { title: 'Hear the opinion and its reason', stage: 'Notice argument structure', move: 'After a short teacher-selected oral argument, identify the speaker’s opinion and one reason or detail that supports it.', support: 'Read or play the short text twice; let students point to “opinion” and “support” on a two-part note card before explaining aloud.', lookFor: 'The learner distinguishes the speaker’s position from a related reason or detail.', why: 'Listening for the relationship between a position and its support prepares students to follow arguments in discussion and text.' },
+          { title: 'Connect a detail to the speaker’s point', stage: 'Track evidence and reasoning', move: 'Explain how one example or detail supports a speaker’s stated position.', support: 'Pause after the position and again after the evidence; invite partner rehearsal with “This supports the idea because…” as an optional prompt.', lookFor: 'The learner names the detail and explains its connection instead of repeating it alone.', why: 'This makes the reasoning between evidence and an opinion visible.' }
+        ],
+        Reading: [
+          { title: 'Find text evidence for the essay question', stage: 'Build and select evidence', move: 'Select a relevant detail from the book that could support an interpretation responding to the actual essay question.', support: 'Display the teacher-provided question; reread a short student-selected passage and annotate “detail” and “possible connection” without supplying a claim or quotation.', lookFor: 'The learner can point to the detail and say how it may relate to the question.', why: 'Choosing relevant evidence connects close reading to the argument students will write.' },
+          { title: 'Study how a literary essay uses evidence', stage: 'Explore the language of a text type', move: 'In a teacher-selected literary essay mentor text, identify the interpretation, a supporting text detail, and the writer’s explanation of the connection.', support: 'Color-mark one example of each part, then discuss what the explanation adds beyond the detail itself.', lookFor: 'The learner can distinguish interpretation, evidence, and reasoning in the mentor text.', why: 'Interactive analysis helps students see how the genre makes an interpretation persuasive.' }
+        ],
+        Speaking: [
+          { title: 'Rehearse an interpretation with evidence', stage: 'Oral rehearsal', move: 'State a student-generated interpretation, point to a relevant story detail, and explain the connection in the learner’s own words.', support: 'Give quiet think time and partner rehearsal; offer “I think ___ because this detail shows ___” only as an optional prompt.', lookFor: 'The learner connects a selected detail to an idea rather than naming a detail without explaining it.', why: 'Oral rehearsal lets students test their reasoning before they draft.' },
+          { title: 'Compare possible interpretations', stage: 'Develop reasoning', move: 'Discuss two possible interpretations of a teacher-selected passage and identify which detail best supports each one.', support: 'Ask partners to point to evidence and explain their choice; accept different interpretations when the text supports them.', lookFor: 'The learner supports an interpretation with a relevant detail and listens to another reading.', why: 'Considering more than one supported view can deepen reasoning when it fits the essay question.' }
+        ],
+        Writing: [
+          { title: 'Explore a literary essay before drafting', stage: 'Explore the language of a text type', move: 'Analyze a teacher-selected literary essay to notice how the writer introduces an interpretation, selects text evidence, explains the connection, and concludes.', support: 'Read and discuss a short mentor essay together. Mark the writer’s idea, evidence, and explanation; ask what each part helps the reader understand. Do not copy the mentor’s claim or details.', lookFor: 'Students can identify how a detail supports the writer’s interpretation and describe the purpose of the explanation.', why: 'Students need to study how this text type makes and supports an interpretation before transferring its choices to their own essay.' },
+          { title: 'Jointly build a parallel argument paragraph', stage: 'Joint construction', move: 'Co-compose a paragraph on a different, related question so students rehearse connecting an interpretation to evidence and reasoning.', support: 'Invite students to propose the idea and choose the evidence; scribe their negotiated wording, reread it together, and discuss whether the explanation makes the connection clear.', lookFor: 'Students contribute ideas and wording, select relevant evidence, and revise the link between the evidence and interpretation.', why: 'A jointly constructed, parallel paragraph rehearses the genre while leaving the actual essay question and claim for students.' }
+        ]
+      }
+    };
+    let currentSample = 'earth';
+    let selectedDomain = 'Speaking';
+    let selectedLevel = 2;
+    let referenceLevelChosen = false;
+    let guideLevel = null;
+    let currentView = 'plan';
+    let currentSuggestions = [];
+    let currentSuggestionSource = 'curated';
+    let lastSuggestionInput = null;
+    const sampleDrafts = {};
+
+    function referenceLevels(name) {
+      const languageUse = document.getElementById('klu')?.value;
+      if (currentSample === 'literary' || languageUse === 'Argue') return argumentLevels[name];
+      if (currentSample === 'narrative') return narrativeLevels[name];
+      return domains[name].levels;
+    }
+    function setSample(name) {
+      const sample = samples[name];
+      if (!sample) return;
+      if (name === currentSample) {
+        updateContextPreview();
+        return;
+      }
+      if (name !== currentSample) {
+        sampleDrafts[currentSample] = {
+          task: document.getElementById('classroom-moment').value,
+          evidence: document.getElementById('observed-evidence').value,
+          subject: document.getElementById('subject').value,
+          klu: document.getElementById('klu').value,
+          domain: selectedDomain,
+          noticed: document.getElementById('noticed').value,
+          nextMove: document.getElementById('next-move').value,
+          support: document.getElementById('support').value,
+          lookFor: document.getElementById('look-for').value
+        };
+      }
+      const draft = sampleDrafts[name];
+      currentSample = name;
+      currentSuggestionSource = 'curated';
+      document.getElementById('classroom-moment').value = draft?.task ?? sample.task;
+      document.getElementById('observed-evidence').value = draft?.evidence ?? sample.evidence;
+      document.getElementById('subject').value = draft?.subject ?? sample.subject;
+      document.getElementById('klu').value = draft?.klu ?? sample.klu;
+      const topicChips = document.getElementById('topic-chips');
+      topicChips.innerHTML = sample.topics.map(topic => `<span>${topic}</span>`).join('');
+      topicChips.setAttribute('aria-label', name === 'narrative' ? 'Narrative writing sample focus' : name === 'literary' ? 'Literary essay sample focus' : 'Assigned research topics');
+      document.getElementById('example-context').textContent = sample.context;
+      document.getElementById('example-evidence').textContent = sample.exampleEvidence;
+      document.getElementById('example-move').textContent = sample.exampleMove;
+      document.getElementById('example-support').textContent = sample.exampleSupport;
+      document.getElementById('example-lookfor').textContent = sample.exampleLookFor;
+      document.getElementById('workspace-note').textContent = sample.note;
+      document.getElementById('guide-intro').textContent = sample.guide;
+      document.getElementById('suggestions-help').textContent = sample.planHelp;
+      document.getElementById('source-note-copy').textContent = sample.sourceNote;
+      selectedDomain = draft?.domain ?? sample.domain;
+      document.getElementById('noticed').value = draft?.noticed ?? '';
+      document.getElementById('next-move').value = draft?.nextMove ?? '';
+      document.getElementById('support').value = draft?.support ?? '';
+      document.getElementById('look-for').value = draft?.lookFor ?? '';
+      document.getElementById('saved-message').textContent = '';
+      document.getElementById('note-output').hidden = true;
+      setDomain(selectedDomain);
+      updateContextPreview();
+    }
+
+    function setDomain(name) {
+      const domainChanged = name !== selectedDomain;
+      selectedDomain = name;
+      const domainChoice = document.getElementById('domain-choice');
+      if (domainChoice && domainChoice.value !== name) domainChoice.value = name;
+      document.querySelectorAll('.domain-tab').forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.domain === name)));
+      document.getElementById('reference-domain-title').textContent = `${name} reference`;
+      document.getElementById('reference-mode').textContent = `${domains[name].mode} mode · optional reference`;
+      document.getElementById('workspace-mode').textContent = `${name} draws on the ${domains[name].mode} mode reference.`;
+      document.getElementById('reference-summary').textContent = referenceLevelChosen
+        ? referenceLevels(name)[selectedLevel - 1]
+        : 'Choose a number to view an optional planning reference. WeGo does not assign it to a learner.';
+      document.querySelectorAll('.level').forEach((btn, i) => btn.setAttribute('aria-pressed', String(referenceLevelChosen && i + 1 === selectedLevel)));
+      renderGuide();
+      if (domainChanged && currentSuggestionSource === 'ai') currentSuggestionSource = 'curated';
+      if (domainChanged || currentSuggestionSource !== 'ai') renderSuggestions();
+      if (domainChanged && document.getElementById('workspace') && !document.getElementById('workspace').hidden) {
+        document.getElementById('workspace-note').textContent = 'This is a prepared example for the selected domain. Choose “Draft a next step for this domain” to request a plan based on your notes.';
+      }
+      updateContextPreview();
+    }
+    function setLevel(level) {
+      selectedLevel = level;
+      referenceLevelChosen = true;
+      document.querySelectorAll('.level').forEach((btn, i) => btn.setAttribute('aria-pressed', String(i + 1 === level)));
+      document.getElementById('reference-summary').textContent = referenceLevels(selectedDomain)[level - 1];
+      guideLevel = level;
+      renderGuide();
+    }
+    function setGuideLevel(level) {
+      guideLevel = level;
+      selectedLevel = level;
+      referenceLevelChosen = true;
+      document.querySelectorAll('.guide-level').forEach((btn, i) => btn.setAttribute('aria-pressed', String(i + 1 === level)));
+      document.querySelectorAll('.level').forEach((btn, i) => btn.setAttribute('aria-pressed', String(i + 1 === level)));
+      document.getElementById('reference-summary').textContent = referenceLevels(selectedDomain)[level - 1];
+      renderGuide();
+    }
+    function renderGuide() {
+      const grid = document.getElementById('domain-grid');
+      if (!grid) return;
+      const guideText = guideLevel === null
+        ? 'Choose an optional reference point above to view an example. The numbers are not a required sequence or student scores.'
+        : null;
+      grid.innerHTML = Object.entries(domains).map(([name, data]) => `
+        <article class="domain-card">
+          <header><h3>${name}</h3><span class="mode-tag">${data.mode} mode</span></header>
+          <p>${guideText || referenceLevels(name)[guideLevel - 1]}</p>
+        </article>`).join('');
+      document.querySelectorAll('.guide-level').forEach((btn, i) => btn.setAttribute('aria-pressed', String(guideLevel !== null && i + 1 === guideLevel)));
+    }
+    function renderSuggestions(options, source = 'curated') {
+      const purpose = document.getElementById('klu')?.value || 'Inform';
+      const candidates = options === undefined ? (suggestionLibrary[purpose]?.[selectedDomain] || []) : options;
+      const suggestions = candidates.length ? [candidates[0]] : [];
+      currentSuggestions = suggestions;
+      currentSuggestionSource = source;
+      const purposeTag = document.getElementById('suggestion-purpose');
+      const grid = document.getElementById('suggestion-cards');
+      const summary = document.getElementById('ai-summary');
+      if (!grid) return;
+      if (purposeTag) purposeTag.textContent = source === 'ai' ? `${purpose} · based on your notes` : `${purpose} · prepared sample`;
+      if (summary) summary.hidden = true;
+      document.getElementById('adjust-actions').hidden = source !== 'ai';
+      document.getElementById('adjust-note').hidden = source !== 'ai';
+      grid.replaceChildren();
+      if (!suggestions.length) {
+        const empty = document.createElement('p');
+        empty.className = 'helper';
+        empty.textContent = `There is no prepared ${purpose} sample for ${selectedDomain} yet. Draft a next step for this domain when live AI is connected.`;
+        grid.append(empty);
+        updateEvidencePanel(null);
+        return;
+      }
+      const suggestion = suggestions[0];
+      const card = document.createElement('article');
+      card.className = 'suggestion-card';
+      if (suggestion.stage) {
+        const stage = document.createElement('span');
+        stage.className = 'mode-tag';
+        stage.textContent = suggestion.stage;
+        card.append(stage);
+      }
+      const title = document.createElement('h4');
+      title.textContent = suggestion.title;
+      card.append(title);
+      const reason = document.createElement('p');
+      const reasonLabel = document.createElement('strong');
+      reasonLabel.textContent = 'Why this may fit: ';
+      reason.append(reasonLabel, document.createTextNode(suggestion.why));
+      card.append(reason);
+      grid.append(card);
+      applySuggestion(0);
+      updateEvidencePanel(suggestion);
+    }
+    function applySuggestion(index) {
+      const suggestion = currentSuggestions[index];
+      if (!suggestion) return;
+      document.getElementById('next-move').value = suggestion.move;
+      document.getElementById('support').value = suggestion.support;
+      document.getElementById('look-for').value = suggestion.lookFor;
+      document.getElementById('saved-message').textContent = '';
+    }
+    function updateEvidencePanel(suggestion) {
+      const input = currentSuggestionSource === 'curated' ? getSuggestionInput() : (lastSuggestionInput || getSuggestionInput());
+      const evidence = document.getElementById('evidence-used');
+      const widaLens = document.getElementById('wida-lens');
+      const assumption = document.getElementById('assumption-used');
+      const note = input.observedEvidence.trim();
+      evidence.textContent = currentSuggestionSource === 'curated'
+        ? `Prepared sample note: ${note || 'No classroom observation is included.'} This sample was not generated from your notes.`
+        : (note || 'No student observation was entered. This draft uses the task and selected planning context only.');
+      const chosenLevel = input.referenceLevel ? ` Optional teacher-selected reference point ${input.referenceLevel}; not an assigned learner score.` : '';
+      const pilotLimit = input.gradeCluster === 'Grades 4–5'
+        ? ' The model uses these selections as a planning lens; WeGo does not look up or quote a specific descriptor here.'
+        : ` The linked WIDA source prepared in this pilot covers Grades 4–5 only; verify ${input.gradeCluster} guidance in its official framework.`;
+      widaLens.textContent = `${input.gradeCluster} · ${input.languageUse} · ${input.domain}.${chosenLevel}${pilotLimit} WeGo wording is not an official descriptor.`;
+      assumption.textContent = currentSuggestionSource === 'ai' && suggestion?.assumptionToCheck
+        ? suggestion.assumptionToCheck
+        : currentSample === 'literary'
+          ? 'Check the exact essay question and whether the class has already analyzed a literary-essay mentor text. WeGo has not seen student work.'
+          : currentSample === 'narrative'
+            ? 'Check whether students have already studied a mentor excerpt and whether this detail work fits their chosen small moment.'
+            : 'Check whether groups already have accurate facts. If they are still researching, focus first on selecting useful details.';
+    }
+    function showView(view) {
+      currentView = view;
+      document.getElementById('home-view').hidden = view !== 'plan';
+      document.getElementById('workspace').hidden = view !== 'workspace';
+      document.getElementById('guide-view').hidden = view !== 'guide';
+      document.getElementById('nav-plan').classList.toggle('active', view !== 'guide');
+      document.getElementById('nav-guide').classList.toggle('active', view === 'guide');
+      if (view === 'guide') renderGuide();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function quickStart(kind) {
+      const input = document.getElementById('classroom-moment');
+      if (kind === 'domain') {
+        input.value = 'I want to plan a language goal and scaffold for one domain in this lesson.';
+        showView('guide');
+      } else if (kind === 'writing') {
+        setSample('earth');
+        selectedDomain = 'Writing';
+        input.value = 'My groups can discuss their assigned sphere but need support writing clear research notes and captions for the presentation.';
+        setDomain('Writing');
+      } else if (kind === 'narrative') {
+        setSample('narrative');
+      } else {
+        setSample('earth');
+        selectedDomain = 'Speaking';
+        input.value = 'My group needs a sentence frame to introduce its assigned sphere and share an accurate fact with classmates.';
+        setDomain('Speaking');
+      }
+      updateContextPreview();
+    }
+    function updateContextPreview() {
+      const grade = document.getElementById('grade')?.value || 'Grades 4–5';
+      const subject = document.getElementById('subject')?.value || 'Science';
+      const klu = document.getElementById('klu')?.value || 'Inform';
+      const preview = document.getElementById('context-preview-text');
+      const taskShort = currentSample === 'narrative' ? 'Small-moment narrative' : currentSample === 'literary' ? 'Literary essay' : 'Earth-spheres presentation';
+      if (preview) preview.textContent = `${grade} · ${subject} · ${klu} · ${selectedDomain}`;
+      const guideIntro = document.getElementById('guide-intro');
+      if (guideIntro) {
+        if (klu === 'Argue' && currentSample === 'literary') {
+          guideIntro.textContent = samples.literary.guide;
+        } else if (klu === 'Argue') {
+          guideIntro.textContent = `Argue means supporting an opinion or interpretation with reasons and relevant evidence. This prepared ${samples[currentSample].klu} sample has a different purpose; replace its task with your actual argument assignment before planning.`;
+        } else if (currentSample === 'literary' && klu !== 'Argue') {
+          guideIntro.textContent = `This literary essay sample is prepared for Argue, but ${klu} is selected. The live suggestions can respond to your selected purpose; check them against the exact essay prompt.`;
+        } else if (currentSample === 'narrative' && klu !== 'Narrate') {
+          guideIntro.textContent = `This small-moment sample was prepared for Narrate, but ${klu} is selected. Live suggestions can respond to the selected language use when the server is configured; review each option against the actual task.`;
+        } else if (currentSample === 'earth' && klu === 'Narrate') {
+          guideIntro.textContent = 'The Earth-spheres sample is built around Inform, with Explain available when students describe relationships. Live suggestions can respond to another selected language use; review science content against the unit materials.';
+        } else {
+          guideIntro.textContent = samples[currentSample].guide;
+        }
+        if (!guideIntro.textContent.includes('not a required sequence')) {
+          guideIntro.textContent += ' The reference points are optional planning prompts, not a required sequence or student scores.';
+        }
+      }
+      const workspaceContext = document.getElementById('workspace-context');
+      if (workspaceContext) workspaceContext.textContent = `${grade} · ${subject} · ${klu} · ${taskShort}`;
+      const guideContext = document.getElementById('guide-context');
+      if (guideContext) guideContext.textContent = `${grade} · ${subject} · ${klu} · ${taskShort}`;
+    }
+    function getSuggestionInput() {
+      const task = document.getElementById('classroom-moment').value.trim();
+      const observedEvidence = document.getElementById('observed-evidence').value.trim();
+      const referenceLevel = referenceLevelChosen ? selectedLevel : null;
+      return {
+        task,
+        observedEvidence,
+        gradeCluster: document.getElementById('grade').value,
+        subject: document.getElementById('subject').value,
+        languageUse: document.getElementById('klu').value,
+        domain: selectedDomain,
+        referenceLevel,
+        referenceText: referenceLevel ? referenceLevels(selectedDomain)[referenceLevel - 1] : null
+      };
+    }
+    async function requestSuggestions(adjustment = null) {
+      const contextInput = getSuggestionInput();
+      if (!contextInput.task) {
+        document.getElementById('classroom-moment').focus();
+        document.getElementById('classroom-moment').setCustomValidity('Add the lesson or task you want help planning.');
+        document.getElementById('classroom-moment').reportValidity();
+        document.getElementById('classroom-moment').setCustomValidity('');
+        return;
+      }
+      const payload = { ...contextInput };
+      if (adjustment) {
+        const current = currentSuggestions[0];
+        if (!current) return;
+        contextInput.observedEvidence = document.getElementById('noticed').value.trim();
+        payload.observedEvidence = contextInput.observedEvidence;
+        payload.adjustment = adjustment;
+        payload.currentSuggestion = {
+          title: current.title,
+          stage: current.stage || '',
+          move: document.getElementById('next-move').value,
+          support: document.getElementById('support').value,
+          lookFor: document.getElementById('look-for').value,
+          why: current.why,
+          assumptionToCheck: current.assumptionToCheck || ''
+        };
+      }
+      lastSuggestionInput = contextInput;
+      if (!adjustment) document.getElementById('noticed').value = contextInput.observedEvidence;
+      else updateEvidencePanel(currentSuggestions[0]);
+      updateContextPreview();
+      showView('workspace');
+      if (!hasLocalSuggestionServer) {
+        renderSuggestions();
+        document.getElementById('workspace-note').textContent = 'This GitHub Pages preview uses prepared examples only. Your notes stay in this browser and are not sent or saved.';
+        document.getElementById('suggestions-help').textContent = 'This prepared example is not based on your notes. Edit the plan fields below to make it fit your classroom.';
+        return;
+      }
+      const button = document.getElementById('refresh-suggestions');
+      const originalLabel = button.textContent;
+      const adjustmentButtons = [...document.querySelectorAll('#adjust-actions button')];
+      button.disabled = true;
+      adjustmentButtons.forEach(action => { action.disabled = true; });
+      button.textContent = adjustment ? 'Adjusting this plan…' : 'Thinking through your lesson…';
+      document.getElementById('workspace-note').textContent = adjustment
+        ? 'WeGo is adjusting the current plan using the same lesson and classroom notes.'
+        : 'WeGo is using your task, classroom evidence, and selected context to draft one next step.';
+      document.getElementById('suggestions-help').textContent = adjustment
+        ? 'The current plan is the starting point. You can still edit any field after the revision.'
+        : 'WeGo will draft one next step. You can edit every field after it appears.';
+      document.getElementById('ai-summary').hidden = true;
+      document.getElementById('ai-summary').textContent = '';
+      if (!adjustment) document.getElementById('suggestion-cards').replaceChildren();
+      try {
+        const response = await fetch('/api/suggestions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          signal: AbortSignal.timeout(40000)
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !Array.isArray(result.suggestions)) {
+          if (adjustment) {
+            document.getElementById('workspace-note').textContent = 'WeGo could not make that adjustment just now. Your current note is still here; you can edit it directly.';
+            return;
+          }
+          renderSuggestions();
+          if (result.code === 'ai_not_configured') {
+            document.getElementById('workspace-note').textContent = 'Sample mode: these are prepared examples, not suggestions generated from your notes. Add the OpenAI key to WeGo’s private server settings to turn on tailored suggestions.';
+          } else if (result.code === 'rate_limited') {
+            document.getElementById('workspace-note').textContent = 'Live suggestions are temporarily at their usage limit. Prepared examples are shown for now.';
+          } else {
+            document.getElementById('workspace-note').textContent = 'WeGo could not reach live suggestions. Prepared examples are shown and may not match your notes.';
+          }
+          return;
+        }
+        renderSuggestions(result.suggestions, 'ai');
+        const summary = document.getElementById('ai-summary');
+        summary.textContent = result.summary;
+        summary.hidden = true;
+        document.getElementById('workspace-note').textContent = 'This draft responds to the task and notes you entered. Review and edit it; it does not rate a learner or replace teacher judgment.';
+      } catch {
+        if (adjustment) {
+          document.getElementById('workspace-note').textContent = 'WeGo could not make that adjustment just now. Your current note is still here; you can edit it directly.';
+          return;
+        }
+        renderSuggestions();
+        document.getElementById('workspace-note').textContent = 'This preview is not connected to the WeGo server. Prepared examples are shown; they are not tailored to your notes yet.';
+      } finally {
+        button.disabled = false;
+        button.textContent = originalLabel;
+        adjustmentButtons.forEach(action => { action.disabled = false; });
+      }
+    }
+    function adjustSuggestion(adjustment) {
+      if (currentSuggestionSource !== 'ai') return;
+      void requestSuggestions(adjustment);
+    }
+    function startPlanning() {
+      const note = document.getElementById('classroom-moment').value.trim();
+      if (!note) {
+        document.getElementById('classroom-moment').focus();
+        document.getElementById('classroom-moment').setCustomValidity('Add a classroom moment or choose a quick start.');
+        document.getElementById('classroom-moment').reportValidity();
+        document.getElementById('classroom-moment').setCustomValidity('');
+        return;
+      }
+      void requestSuggestions();
+    }
+    function openRecent(sampleName = 'earth') {
+      setSample(sampleName);
+      showView('plan');
+    }
+    function collectPlan() {
+      const get = id => document.getElementById(id).value.trim();
+      const reference = referenceLevelChosen ? `WeGo task-facing reference point ${selectedLevel} (teacher-selected, not an assigned student level).` : 'No proficiency-level reference selected.';
+      const sourceLabel = currentSuggestionSource === 'ai' ? 'AI draft based on the teacher notes shown above' : 'Prepared sample; not generated from the teacher notes';
+      return `WeGo co-planning note\n${document.getElementById('grade').value} · ${document.getElementById('subject').value} · ${document.getElementById('klu').value} · ${selectedDomain}\n\nWhat students are doing now: ${get('noticed')}\n\nOne next language move: ${get('next-move')}\n\nOne practice to try: ${get('support')}\n\nOne thing to look or listen for: ${get('look-for')}\n\nSuggestion source: ${sourceLabel}\n\nWIDA planning lens: ${document.getElementById('wida-lens').textContent}\n\nAssumption to check: ${document.getElementById('assumption-used').textContent}\n\nPlanning reference: WIDA ${domains[selectedDomain].mode} mode; ${reference}`;
+    }
+    function savePlan() {
+      window.preparedPlan = collectPlan();
+      document.getElementById('saved-message').textContent = 'Note prepared for this session. Copy or print it for co-planning.';
+    }
+    async function copyPlan() {
+      const text = collectPlan();
+      try {
+        await navigator.clipboard.writeText(text);
+        document.getElementById('note-output').hidden = true;
+        document.getElementById('saved-message').textContent = 'Note copied. You can paste it into your co-planning document.';
+      } catch (e) {
+        const output = document.getElementById('note-output');
+        output.value = text;
+        output.hidden = false;
+        output.focus();
+        output.select();
+        document.getElementById('saved-message').textContent = 'The note is selected below so you can copy it.';
+      }
+    }
+    document.querySelectorAll('#grade, #subject, #klu').forEach(el => el.addEventListener('change', () => {
+      updateContextPreview();
+      renderSuggestions();
+    }));
+    document.getElementById('domain-choice').addEventListener('change', event => setDomain(event.target.value));
+    renderGuide();
+    renderSuggestions();
+    setDomain(selectedDomain);
+    if (hasLocalSuggestionServer) {
+      fetch('/api/status').then(response => response.ok ? response.json() : null).then(status => {
+        const connectionStatus = document.getElementById('connection-status');
+        if (status?.liveSuggestions) {
+          connectionStatus.textContent = 'Live mode is configured. Suggestions and requested revisions send your notes to OpenAI and may use paid API credits. Remove student names first.';
+        } else if (status) {
+          connectionStatus.textContent = 'Sample mode: prepared examples work now. Live suggestions will use your lesson notes after the private API key is configured.';
+        }
+      }).catch(() => {
+        document.getElementById('connection-status').textContent = 'Sample mode: prepared examples work in this preview. Live suggestions need the WeGo server and its private API key.';
+      });
+    } else {
+      document.getElementById('planning-intro').textContent = 'Explore prepared examples and shape a planning note for your classroom.';
+      document.getElementById('privacy-notice').innerHTML = '<span aria-hidden="true">▣</span> This GitHub Pages preview does not send or save your notes. Keep student names and private details out of any plan you choose to copy.';
+      document.querySelector('.primary').innerHTML = 'Show a prepared example <span aria-hidden="true">→</span>';
+      document.getElementById('connection-status').textContent = 'Preview mode: prepared examples only. Notes stay in this browser and are not sent or saved.';
+    }
+  </script>
+</body>
+</html>
