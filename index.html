@@ -25,47 +25,41 @@
     body { margin: 0; background: var(--canvas); color: var(--ink); font: 15px/1.5 var(--sans); }
     button, input, textarea, select { font: inherit; }
     button { cursor: pointer; }
-    .topbar { height: 72px; display: flex; align-items: center; gap: 42px; padding: 0 max(28px, calc((100vw - 1480px) / 2)); background: rgba(255,255,255,.94); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; }
+    .topbar { height: 68px; display: flex; align-items: center; gap: 36px; padding: 0 max(28px, calc((100vw - 1160px) / 2)); background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; }
     .brand { display: inline-flex; align-items: center; gap: 10px; font-size: 27px; font-weight: 750; letter-spacing: -.06em; color: var(--ink); text-decoration: none; }
     .brand-mark { width: 28px; height: 28px; display: inline-block; position: relative; }
     .brand-mark i { position: absolute; width: 12px; height: 18px; border-radius: 12px 2px 12px 2px; transform: rotate(-32deg); background: #67b598; left: 2px; top: 7px; }
     .brand-mark i:nth-child(2) { left: 14px; top: 0; width: 11px; height: 20px; background: #299bd1; transform: rotate(25deg); }
     .brand-mark i:nth-child(3) { left: 10px; top: 15px; width: 10px; height: 12px; background: #5a72bd; transform: rotate(19deg); }
-    .nav { height: 100%; display: flex; align-items: center; gap: 34px; flex: 1; }
+    .nav { height: 100%; display: flex; align-items: center; gap: 24px; flex: 1; }
     .nav button, .help { background: none; border: 0; color: #46516a; height: 100%; padding: 0 5px; }
     .nav button.active { color: var(--ink); font-weight: 650; border-bottom: 3px solid var(--teal); }
-    .help { display: inline-flex; align-items: center; gap: 10px; color: var(--blue); }
-    .help-dot { display: inline-grid; place-items: center; border: 1.5px solid currentColor; width: 22px; height: 22px; border-radius: 50%; font-size: 13px; font-weight: 700; }
-    main { max-width: 1480px; padding: 30px 28px 56px; margin: auto; }
-    .hero { position: relative; overflow: hidden; padding: 6px 16px 24px; }
-    .hero:after { content: ""; position: absolute; z-index: -1; right: 25px; top: -26px; width: 320px; height: 175px; opacity: .55; background: radial-gradient(ellipse at 70% 70%, #d8efe5 0 17%, transparent 18%), radial-gradient(ellipse at 82% 30%, #d8efe5 0 14%, transparent 15%), radial-gradient(ellipse at 40% 85%, #e4edf6 0 27%, transparent 28%); }
+    main { max-width: 1160px; padding: 38px 28px 56px; margin: auto; }
+    .hero { max-width: 900px; margin: 0 auto; padding: 4px 0 22px; }
+    .hero:after { content: none; }
     .eyebrow { font-size: 12px; letter-spacing: .13em; font-weight: 750; color: #64718a; text-transform: uppercase; }
     h1, h2, h3, p { margin-top: 0; }
-    h1 { margin: 8px 0 2px; font: 500 clamp(38px, 4.8vw, 60px)/1.08 var(--serif); letter-spacing: -.035em; }
-    .hero p { margin: 8px 0 0; max-width: 760px; color: var(--muted); font-size: 19px; }
-    .columns { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(390px, 1fr); gap: 16px; }
-    .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
-    .prompt-panel, .example-panel { padding: 22px 24px; }
+    h1 { margin: 6px 0 2px; font: 500 clamp(36px, 4vw, 50px)/1.08 var(--serif); letter-spacing: -.035em; }
+    .hero p { margin: 8px 0 0; max-width: 680px; color: var(--muted); font-size: 17px; }
+    .columns { max-width: 900px; margin: 0 auto; }
+    .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 2px 10px rgba(23, 35, 66, .035); }
+    .prompt-panel, .example-panel { padding: 28px 32px; }
     .section-kicker { display: flex; align-items: center; gap: 12px; margin-bottom: 9px; color: #66728a; font-size: 12px; letter-spacing: .09em; font-weight: 760; text-transform: uppercase; }
     .kicker-icon { display: grid; place-items: center; width: 38px; height: 38px; background: var(--soft-teal); color: #078e9e; border-radius: 50%; font-size: 18px; letter-spacing: 0; }
-    h2 { margin-bottom: 2px; font: 600 26px/1.22 var(--serif); letter-spacing: -.02em; }
+    h2 { margin-bottom: 2px; font: 600 25px/1.22 var(--serif); letter-spacing: -.02em; }
     .helper { color: var(--muted); margin: 0 0 14px; }
     label { display: block; color: #606d85; font-size: 13px; font-weight: 650; margin-bottom: 7px; }
     textarea, input, select { color: var(--ink); background: #fff; border: 1px solid #dce2ea; border-radius: 12px; padding: 13px 15px; width: 100%; outline: none; }
     textarea:focus, input:focus, select:focus { border-color: #43aaa8; box-shadow: 0 0 0 3px rgba(32,183,174,.13); }
-    textarea { min-height: 100px; resize: vertical; font-size: 16px; }
-    .privacy { color: var(--muted); font-size: 12px; display: flex; align-items: center; gap: 8px; margin: 7px 0 16px; }
-    .topic-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: -5px 0 15px; }
-    .topic-chips span { border: 1px solid #dce8e7; border-radius: 999px; padding: 4px 9px; background: #f5fbfa; color: #426773; font-size: 11px; }
-    .quick-label { color: #68738a; text-transform: uppercase; letter-spacing: .08em; font-size: 11px; font-weight: 750; margin: 0 0 8px; }
-    .quick-starts { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 9px; }
-    .quick { min-height: 48px; padding: 8px 11px; border: 1px solid var(--line); border-radius: 12px; background: #fff; color: var(--ink); text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 7px; }
-    .quick:hover, .quick:focus-visible { border-color: #8fcfcb; background: #f8fdfc; }
-    .quick span { color: var(--blue); font-size: 19px; }
-    details.context { border-top: 1px solid var(--line); margin-top: 17px; padding-top: 12px; }
-    details.context summary { list-style: none; display: flex; justify-content: space-between; align-items: center; cursor: pointer; color: #67738a; text-transform: uppercase; letter-spacing: .06em; font-size: 11px; font-weight: 750; }
+    textarea { min-height: 88px; resize: vertical; font-size: 16px; }
+    .privacy { color: var(--muted); font-size: 12px; display: flex; align-items: flex-start; gap: 8px; margin: 8px 0 2px; }
+    details.context { border-top: 1px solid var(--line); margin-top: 18px; padding-top: 13px; }
+    details.context summary { list-style: none; display: flex; justify-content: space-between; align-items: center; cursor: pointer; color: #47536b; font-size: 13px; font-weight: 650; }
     details.context summary::-webkit-details-marker { display: none; }
-    .context-preview { margin-top: 10px; background: #f3f5f8; border-radius: 11px; padding: 10px 13px; display: flex; align-items: center; justify-content: space-between; color: var(--ink); font-size: 13px; }
+    .context-meta { color: var(--muted); font-size: 12px; font-weight: 450; margin-left: 7px; }
+    .context-toggle { color: var(--muted); font-size: 18px; line-height: 1; }
+    details.context[open] .context-toggle { font-size: 0; }
+    details.context[open] .context-toggle::after { content: "−"; font-size: 18px; }
     .context-fields { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; padding-top: 13px; }
     .context-fields label { font-size: 12px; }
     .context-fields select { padding: 10px; }
@@ -90,11 +84,17 @@
     .reference-note { grid-column: 1 / -1; color: #788398; font-size: 11px; }
     .reference-source { grid-column: 1 / -1; color: #788398; font-size: 11px; }
     .text-link { border: 0; background: none; color: var(--blue); padding: 0; font-size: 13px; font-weight: 650; align-self: flex-start; margin-top: 12px; }
-    .recent { margin: 19px 0 0; padding: 0 18px; }
-    .recent-head { border-top: 1px solid var(--line); padding-top: 13px; color: #68738a; text-transform: uppercase; letter-spacing: .08em; font-size: 11px; font-weight: 750; }
-    .recent button { width: 100%; min-height: 48px; text-align: left; display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 10px 13px; color: var(--ink); }
+    .worked-example, .recent { max-width: 900px; margin: 12px auto 0; }
+    .worked-example > summary, .recent > summary { list-style: none; cursor: pointer; color: #47536b; font-size: 13px; font-weight: 650; padding: 13px 16px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.72); }
+    .worked-example > summary::-webkit-details-marker, .recent > summary::-webkit-details-marker { display: none; }
+    .worked-example > summary::after, .recent > summary::after { content: "+"; float: right; color: var(--muted); font-size: 18px; line-height: 1; }
+    .worked-example[open] > summary, .recent[open] > summary { border-radius: 12px 12px 0 0; }
+    .worked-example[open] > summary::after, .recent[open] > summary::after { content: "−"; }
+    .worked-example .example-panel { margin-top: 8px; }
+    .recent-list { display: grid; gap: 7px; border: 1px solid var(--line); border-top: 0; padding: 10px; border-radius: 0 0 12px 12px; background: #fff; }
+    .recent button { width: 100%; min-height: 46px; text-align: left; display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px 13px; color: var(--ink); }
     .recent button span:last-child { margin-left: auto; color: var(--blue); }
-    .notice { color: #737e91; text-align: center; font-size: 12px; margin: 23px 0 0; }
+    .notice { max-width: 900px; color: #737e91; text-align: left; font-size: 12px; margin: 18px auto 0; }
     .workspace, .guide { margin-top: 22px; padding: 24px; }
     .workspace[hidden], .guide[hidden], .home[hidden] { display: none; }
     .workspace-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; margin-bottom: 18px; }
@@ -121,6 +121,7 @@
     .source-note { background: #f0f5fb; border-radius: 12px; padding: 13px 15px; margin-top: 14px; color: #4b5c76; font-size: 13px; }
     .source-note a { color: #216ac3; }
     .prototype-note { background: #f3f8fb; border: 1px solid #dfeaf1; border-radius: 11px; padding: 11px 13px; color: #52647a; font-size: 12px; margin: 10px 0 0; }
+    .connection-status { background: transparent; border: 0; padding: 0; color: var(--muted); font-size: 12px; margin-top: 10px; }
     .suggestions { background: #f8fbfb; border: 1px solid #e0eceb; border-radius: 14px; padding: 16px; margin: 14px 0; }
     .suggestions-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .suggestions h3 { margin: 0; font: 600 21px/1.2 var(--serif); }
@@ -148,29 +149,25 @@
     .saved { min-height: 22px; color: #19745f; font-size: 13px; font-weight: 650; }
     .button-row { display: flex; gap: 8px; }
     .button-row .primary { width: auto; min-width: 165px; padding: 0 18px; margin: 0; }
-    footer { max-width: 1480px; margin: 0 auto; border-top: 1px solid var(--line); padding: 18px 28px 30px; color: #778197; font-size: 12px; display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+    footer { max-width: 1160px; margin: 0 auto; border-top: 1px solid var(--line); padding: 18px 28px 30px; color: #778197; font-size: 12px; display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
     @media (max-width: 900px) {
       .topbar { padding: 0 18px; gap: 20px; }
       .nav { gap: 15px; }
       main { padding: 22px 16px 40px; }
-      .columns { grid-template-columns: 1fr; }
-      .hero { padding-left: 5px; }
+      .hero { padding-bottom: 18px; }
       .example-panel { min-height: unset; }
-      .recent { padding: 0 4px; }
     }
     @media (max-width: 600px) {
-      .topbar { height: 62px; gap: 14px; padding: 0 13px; }
+      .topbar { height: 60px; gap: 14px; padding: 0 13px; }
       .brand { font-size: 22px; }
       .nav { gap: 10px; }
       .nav button { font-size: 12px; }
-      .help { font-size: 0; gap: 0; }
       main { padding: 17px 12px 30px; }
-      .hero { padding: 7px 3px 18px; }
-      .hero p { font-size: 16px; }
-      .prompt-panel, .example-panel { padding: 17px 15px; }
-      .quick-starts { grid-template-columns: 1fr; }
-      .quick { min-height: 43px; }
-      .context-fields, .plan-grid, .domain-grid { grid-template-columns: 1fr; }
+      .hero { padding: 3px 0 15px; }
+      h1 { font-size: clamp(34px, 9vw, 42px); }
+      .hero p { font-size: 15px; }
+      .prompt-panel, .example-panel { padding: 20px 17px; }
+      .context-fields, .plan-grid, .domain-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .suggestion-cards { grid-template-columns: 1fr; }
       .evidence-panel { grid-template-columns: 1fr; }
       .example-row { grid-template-columns: 100px 1fr; }
@@ -181,6 +178,14 @@
       .guide-levels { width: 100%; justify-content: space-between; }
       .guide-level { flex: 1; }
       footer { padding: 15px 14px 25px; }
+    }
+    @media (max-width: 420px) {
+      .topbar { gap: 10px; padding: 0 10px; }
+      .brand { gap: 7px; font-size: 20px; }
+      .nav { gap: 7px; }
+      .nav button { padding: 0 3px; font-size: 11px; }
+      .context-fields, .plan-grid, .domain-grid { grid-template-columns: 1fr; }
+      .context-meta { display: block; margin: 4px 0 0; }
     }
     @media print {
       .topbar, .home, .guide, .notice, .plan-actions .button-row { display: none !important; }
@@ -195,43 +200,31 @@
   <header class="topbar">
     <a href="#" class="brand" aria-label="WeGo home" onclick="showView('plan'); return false;"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>WeGo</a>
     <nav class="nav" aria-label="Main navigation">
-      <button class="active" id="nav-plan" type="button" onclick="showView('plan')">Plan next steps</button>
+      <button class="active" id="nav-plan" type="button" onclick="showView('plan')">Plan</button>
       <button id="nav-guide" type="button" onclick="showView('guide')">Domain guide</button>
     </nav>
-    <button class="help" type="button" onclick="document.getElementById('source-note').scrollIntoView({behavior:'smooth',block:'center'})"><span class="help-dot">?</span>First time here?</button>
   </header>
 
   <main>
     <section class="home" id="home-view">
       <div class="hero">
-        <div class="eyebrow">Your planning workspace</div>
-        <h1>Where do we go from here?</h1>
-        <p>Start with the classroom moment. Add context as you go.</p>
+        <h1>Plan one next step</h1>
+        <p>Turn a classroom moment into one language move, one practice, and one look-for.</p>
       </div>
 
       <div class="columns">
         <section class="panel prompt-panel" aria-labelledby="prompt-title">
-          <div class="section-kicker"><span class="kicker-icon" aria-hidden="true">✎</span>Start with the classroom moment</div>
-          <h2 id="prompt-title">What are you trying to plan or solve?</h2>
-          <p class="helper" id="planning-intro">Describe the assignment and what you’re seeing. WeGo will suggest a next step.</p>
-          <label for="classroom-moment">What are students working on?</label>
+          <h2 id="prompt-title">Start with a classroom moment</h2>
+          <p class="helper" id="planning-intro">Enter a lesson task and an observation. WeGo will draft one focused next step.</p>
+          <label for="classroom-moment">What are students learning or being asked to do?</label>
           <textarea id="classroom-moment" aria-describedby="classroom-moment-help">My Grade 4 groups are researching different Earth spheres. They need support selecting useful facts and organizing a clear presentation for classmates.</textarea>
-          <p class="field-help" id="classroom-moment-help">The Earth-spheres text is a sample. Replace it with your class task. Example: “Students are writing an essay about ___. The prompt asks them to ___.” Include the exact question if you have it.</p>
-          <label for="observed-evidence" style="margin-top:11px">What can students do now, and where are they getting stuck?</label>
+          <p class="field-help" id="classroom-moment-help">A sample task is loaded. Replace it with your class task; include the exact prompt if you have it.</p>
+          <label for="observed-evidence" style="margin-top:13px">What have you noticed learners can do so far?</label>
           <textarea id="observed-evidence" style="min-height:72px;font-size:14px" aria-describedby="observed-evidence-help">They can find facts in a source or visual, but need help choosing details and organizing speaking turns.</textarea>
-          <p class="field-help" id="observed-evidence-help">Example: “They can state an opinion, but aren’t yet explaining how a detail supports it.” A rough observation is enough.</p>
+          <p class="field-help" id="observed-evidence-help">Name one strength and one sticking point, if you know them.</p>
           <p class="privacy" id="privacy-notice"><span aria-hidden="true">▣</span> Live suggestions and requested AI revisions send these notes to OpenAI and may use paid credits. Don’t include names or private student details.</p>
-          <div class="topic-chips" id="topic-chips" aria-label="Assigned research topics"><span>Biosphere</span><span>Rhizosphere</span><span>Lithosphere</span><span>Hydrosphere</span></div>
-          <div class="quick-label">Quick starts</div>
-          <div class="quick-starts">
-            <button class="quick" type="button" onclick="quickStart('domain')">Plan by domain <span>›</span></button>
-            <button class="quick" type="button" onclick="quickStart('writing')">Support writing <span>›</span></button>
-            <button class="quick" type="button" onclick="quickStart('frame')">Build a sentence frame <span>›</span></button>
-            <button class="quick" type="button" onclick="quickStart('narrative')">Try small-moment narrative <span>›</span></button>
-          </div>
-          <details class="context" open>
-            <summary><span>Planning context (optional)</span><span>⌄</span></summary>
-            <div class="context-preview"><span id="context-preview-text">Grades 4–5 · Science · Inform · Speaking</span><span>Edit</span></div>
+          <details class="context">
+            <summary><span>Add planning context <small class="context-meta" id="context-preview-text">Grades 4–5 · Science · Inform · Speaking</small></span><span class="context-toggle" aria-hidden="true">+</span></summary>
             <div class="context-fields">
               <div><label for="grade">Grade cluster</label><select id="grade"><option>Grades 4–5</option><option>Grades 2–3</option><option>Grades 6–8</option><option>Grades 9–12</option><option>Kindergarten</option><option>Grade 1</option></select></div>
               <div><label for="subject">Content</label><select id="subject"><option>Science</option><option>Language arts</option><option>Mathematics</option><option>Social studies</option></select></div>
@@ -241,9 +234,12 @@
             <p class="field-help" id="language-use-help">Argue means supporting an opinion or interpretation with reasons and relevant evidence; it does not require a debate.</p>
           </details>
           <button class="primary" type="button" onclick="startPlanning()">Suggest a next step <span aria-hidden="true">→</span></button>
-          <p class="prototype-note" id="connection-status" role="status" aria-live="polite">Sample mode: prepared examples work now. Live suggestions will use your lesson notes after the private API connection is configured.</p>
+          <p class="prototype-note connection-status" id="connection-status" role="status" aria-live="polite">Sample mode: prepared examples work now. Live suggestions will use your lesson notes after the private API connection is configured.</p>
         </section>
 
+      </div>
+      <details class="worked-example">
+        <summary>See a worked example</summary>
         <section class="panel example-panel" aria-labelledby="example-title">
           <div class="section-kicker"><span class="kicker-icon" aria-hidden="true">▤</span>A worked example</div>
           <h2 id="example-title">From evidence to next move</h2>
@@ -270,15 +266,17 @@
           </div>
           <button class="text-link" type="button" onclick="showView('guide')">Explore all four domains <span aria-hidden="true">→</span></button>
         </section>
-      </div>
+      </details>
 
-      <section class="recent" aria-label="Sample lessons">
-        <div class="recent-head">Sample lessons</div>
-        <button type="button" onclick="openRecent('earth')"><span aria-hidden="true">▤</span><span>Earth spheres presentation · Grade 4 · Open sample</span><span>›</span></button>
-        <button type="button" onclick="openRecent('narrative')" style="margin-top:7px"><span aria-hidden="true">▤</span><span>Small-moment narrative · Grade 4 · Open sample</span><span>›</span></button>
-        <button type="button" onclick="openRecent('literary')" style="margin-top:7px"><span aria-hidden="true">▤</span><span>Literary essay · Grade 4–5 · Open sample</span><span>›</span></button>
-      </section>
-      <p class="notice">Planning references support teacher judgment. They do not assign a proficiency level or prescribe one next step.</p>
+      <details class="recent" aria-label="Sample lessons">
+        <summary>Try a prepared lesson example</summary>
+        <div class="recent-list">
+          <button type="button" onclick="openRecent('earth')"><span>Earth spheres presentation · Grade 4</span><span>Open</span></button>
+          <button type="button" onclick="openRecent('narrative')"><span>Small-moment narrative · Grade 4</span><span>Open</span></button>
+          <button type="button" onclick="openRecent('literary')"><span>Literary essay · Grades 4–5</span><span>Open</span></button>
+        </div>
+      </details>
+      <p class="notice">References support teacher judgment; they are not learner scores or required steps.</p>
     </section>
 
     <section class="panel workspace" id="workspace" hidden aria-labelledby="workspace-title">
@@ -333,7 +331,7 @@
       <div class="source-note" id="source-note"><strong>About the references.</strong> <span id="source-note-copy">WIDA’s Grades 4–5 2020 Proficiency Level Descriptors are organized by Interpretive and Expressive modes; WeGo offers separate domain views with original, task-specific examples. These are planning references, not official WIDA descriptors or student scores.</span> <a href="https://wida.wisc.edu/sites/default/files/resource/WIDA-ELD-Standards-Framework-2020-Edition-Grades-4-5.pdf" target="_blank" rel="noreferrer">Open the WIDA Grades 4–5 framework</a> · <a href="https://wida.wisc.edu/resources/introduction-updated-key-language-uses" target="_blank" rel="noreferrer">Read about WIDA Key Language Uses</a>.</div>
     </section>
   </main>
-  <footer><span>WeGo · A planning companion for multilingual classrooms</span><span>Grade 4 pilot · Prepared examples + optional live suggestions</span></footer>
+  <footer><span>WeGo · Planning support for multilingual classrooms</span><span>Prepared examples · Optional local AI</span></footer>
 
   <script>
     const hasLocalSuggestionServer = ['localhost', '127.0.0.1'].includes(window.location.hostname);
@@ -617,8 +615,10 @@
       document.getElementById('subject').value = draft?.subject ?? sample.subject;
       document.getElementById('klu').value = draft?.klu ?? sample.klu;
       const topicChips = document.getElementById('topic-chips');
-      topicChips.innerHTML = sample.topics.map(topic => `<span>${topic}</span>`).join('');
-      topicChips.setAttribute('aria-label', name === 'narrative' ? 'Narrative writing sample focus' : name === 'literary' ? 'Literary essay sample focus' : 'Assigned research topics');
+      if (topicChips) {
+        topicChips.innerHTML = sample.topics.map(topic => `<span>${topic}</span>`).join('');
+        topicChips.setAttribute('aria-label', name === 'narrative' ? 'Narrative writing sample focus' : name === 'literary' ? 'Literary essay sample focus' : 'Assigned research topics');
+      }
       document.getElementById('example-context').textContent = sample.context;
       document.getElementById('example-evidence').textContent = sample.exampleEvidence;
       document.getElementById('example-move').textContent = sample.exampleMove;
