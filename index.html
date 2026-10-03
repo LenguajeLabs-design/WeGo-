@@ -311,15 +311,15 @@
       </div>
       <p class="adjust-note" id="adjust-note" hidden>These revisions use another AI request. You can always edit the fields yourself.</p>
       <h3 class="plan-heading">Edit your co-planning note</h3>
-      <p class="plan-explainer">WeGo filled these from the draft above. Keep, change, or simplify anything before sharing.</p>
+      <p class="plan-explainer">Review or edit the draft, then preview, copy, or print it. WeGo does not save the note.</p>
       <div class="plan-grid">
         <div class="plan-field"><label for="noticed">What students are doing now</label><p class="field-help" id="noticed-help">Your observation in your words. Example: “They have an idea, but haven’t linked it to evidence yet.”</p><textarea id="noticed" placeholder="Add what you heard or saw, if you have it." aria-describedby="noticed-help"></textarea></div>
         <div class="plan-field"><label for="next-move">One next language move</label><p class="field-help" id="next-move-help">What students will practice saying, reading, listening for, or writing.</p><textarea id="next-move" placeholder="WeGo will suggest one move based on your task and notes." aria-describedby="next-move-help"></textarea></div>
         <div class="plan-field"><label for="support">One practice to try</label><p class="field-help" id="support-help">A short student activity, such as a model, partner rehearsal, annotation, or organizer. Example: “Rehearse the idea and evidence aloud with a partner.”</p><textarea id="support" placeholder="WeGo will suggest one practice students can try." aria-describedby="support-help"></textarea></div>
         <div class="plan-field"><label for="look-for">One thing to look or listen for</label><p class="field-help" id="look-for-help">A sign students are trying the language move. Example: “They explain why the detail supports their idea.”</p><textarea id="look-for" placeholder="WeGo will suggest one observable sign of progress." aria-describedby="look-for-help"></textarea></div>
       </div>
-      <div class="plan-actions"><div class="saved" id="saved-message" aria-live="polite"></div><div class="button-row"><button class="outline" type="button" onclick="copyPlan()">Copy note</button><button class="outline" type="button" onclick="window.print()">Print</button><button class="primary" type="button" onclick="savePlan()">Prepare co-planning note</button></div></div>
-      <textarea id="note-output" aria-label="Prepared co-planning note" readonly hidden style="margin-top:12px;min-height:170px"></textarea>
+      <div class="plan-actions"><div class="saved" id="saved-message" aria-live="polite"></div><div class="button-row"><button class="outline" type="button" onclick="copyPlan()">Copy note</button><button class="outline" type="button" onclick="window.print()">Print</button><button class="primary" type="button" onclick="previewPlan()">Preview note</button></div></div>
+      <textarea id="note-output" aria-label="Co-planning note preview" readonly hidden style="margin-top:12px;min-height:170px"></textarea>
     </section>
 
     <section class="panel guide" id="guide-view" hidden aria-labelledby="guide-heading">
@@ -763,6 +763,7 @@
           : currentSample === 'narrative'
             ? 'Check whether students have already studied a mentor excerpt and whether this detail work fits their chosen small moment.'
             : 'Check whether groups already have accurate facts. If they are still researching, focus first on selecting useful details.';
+      refreshNotePreview();
     }
     function showView(view) {
       currentView = view;
@@ -824,6 +825,7 @@
       if (workspaceContext) workspaceContext.textContent = `${grade} · ${subject} · ${klu} · ${taskShort}`;
       const guideContext = document.getElementById('guide-context');
       if (guideContext) guideContext.textContent = `${grade} · ${subject} · ${klu} · ${taskShort}`;
+      refreshNotePreview();
     }
     function getSuggestionInput() {
       const task = document.getElementById('classroom-moment').value.trim();
@@ -958,15 +960,21 @@
       const sourceLabel = currentSuggestionSource === 'ai' ? 'AI draft based on the teacher notes shown above' : 'Prepared sample; not generated from the teacher notes';
       return `WeGo co-planning note\n${document.getElementById('grade').value} · ${document.getElementById('subject').value} · ${document.getElementById('klu').value} · ${selectedDomain}\n\nWhat students are doing now: ${get('noticed')}\n\nOne next language move: ${get('next-move')}\n\nOne practice to try: ${get('support')}\n\nOne thing to look or listen for: ${get('look-for')}\n\nSuggestion source: ${sourceLabel}\n\nWIDA planning lens: ${document.getElementById('wida-lens').textContent}\n\nAssumption to check: ${document.getElementById('assumption-used').textContent}\n\nPlanning reference: WIDA ${domains[selectedDomain].mode} mode; ${reference}`;
     }
-    function savePlan() {
-      window.preparedPlan = collectPlan();
-      document.getElementById('saved-message').textContent = 'Note prepared for this session. Copy or print it for co-planning.';
+    function refreshNotePreview() {
+      const output = document.getElementById('note-output');
+      if (output && !output.hidden) output.value = collectPlan();
+    }
+    function previewPlan() {
+      const output = document.getElementById('note-output');
+      output.value = collectPlan();
+      output.hidden = false;
+      document.getElementById('saved-message').textContent = 'Preview ready below. It is not saved; copy or print it to keep.';
+      output.focus();
     }
     async function copyPlan() {
       const text = collectPlan();
       try {
         await navigator.clipboard.writeText(text);
-        document.getElementById('note-output').hidden = true;
         document.getElementById('saved-message').textContent = 'Note copied. You can paste it into your co-planning document.';
       } catch (e) {
         const output = document.getElementById('note-output');
@@ -981,6 +989,7 @@
       updateContextPreview();
       renderSuggestions();
     }));
+    document.querySelectorAll('#noticed, #next-move, #support, #look-for').forEach(el => el.addEventListener('input', refreshNotePreview));
     document.getElementById('domain-choice').addEventListener('change', event => setDomain(event.target.value));
     renderGuide();
     renderSuggestions();
